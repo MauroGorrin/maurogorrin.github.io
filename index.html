@@ -212,6 +212,43 @@
       line-height: 1.55;
     }
 
+    .logos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .logo-card {
+      background: var(--card-strong);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 14px;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      text-align: center;
+      transition: transform 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+    }
+
+    .logo-card:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255, 255, 255, 0.18);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+    }
+
+    .logo-card img {
+      max-width: 140px;
+      max-height: 64px;
+      object-fit: contain;
+      filter: grayscale(90%);
+      opacity: 0.92;
+    }
+
     .pill-row {
       display: flex;
       flex-wrap: wrap;
@@ -288,6 +325,42 @@
           <li>Setups técnicos: GA4, GTM, Conversion API y server-side tagging.</li>
           <li>Reportes claros con optimizaciones mensuales orientadas al ROI.</li>
         </ul>
+      </div>
+    </section>
+
+    <section aria-labelledby="logos">
+      <div class="section-title">
+        <span>Confianza</span>
+        <h2 id="logos">Empresas que han confiado en nosotros</h2>
+      </div>
+      <div class="logos" aria-label="Logos de empresas que han confiado en nosotros">
+        <div class="logo-card">
+          <img src="assets/logos/health-partner.svg" alt="Cliente del sector salud" />
+        </div>
+        <div class="logo-card">
+          <img src="assets/logos/hacienda-la-calceta.svg" alt="Hacienda La Calceta" />
+        </div>
+        <div class="logo-card">
+          <img src="assets/logos/lilo.svg" alt="Lilo" />
+        </div>
+        <div class="logo-card">
+          <img src="assets/logos/subway.svg" alt="Subway" />
+        </div>
+        <div class="logo-card">
+          <img src="assets/logos/dominos.svg" alt="Domino's" />
+        </div>
+        <div class="logo-card">
+          <img src="assets/logos/santa-teresa.svg" alt="Santa Teresa" />
+        </div>
+        <div class="logo-card">
+          <img src="assets/logos/ivoo.svg" alt="Ivoo" />
+        </div>
+        <div class="logo-card">
+          <img src="assets/logos/clx-samsung.svg" alt="CLX Samsung" />
+        </div>
+        <div class="logo-card">
+          <img src="assets/logos/daka.svg" alt="Daka" />
+        </div>
       </div>
     </section>
 
