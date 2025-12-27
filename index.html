@@ -1,1 +1,504 @@
-Hola
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paid Media y Marketing Digital | Mauro Gorrín</title>
+  <meta name="description" content="Servicios de paid media, estrategia digital, branding y automatización para marcas ambiciosas." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #05070f;
+      --card: rgba(255, 255, 255, 0.05);
+      --card-strong: rgba(255, 255, 255, 0.08);
+      --text: #f8fbff;
+      --muted: #c7d2e4;
+      --accent: #8bd5ff;
+      --accent-strong: #56c2ff;
+      --gradient: linear-gradient(120deg, #0d1b37, #10294d, #0a1a32);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 20% 20%, rgba(139, 213, 255, 0.08), transparent 30%),
+                  radial-gradient(circle at 80% 0%, rgba(86, 194, 255, 0.1), transparent 28%),
+                  var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 20px 80px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 20px;
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(10px);
+      background: rgba(5, 7, 15, 0.75);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      z-index: 2;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: -0.4px;
+    }
+
+    .brand svg {
+      width: 42px;
+      height: 42px;
+      padding: 8px;
+      border-radius: 12px;
+      background: var(--card);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .cta {
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+      background: linear-gradient(120deg, rgba(139, 213, 255, 0.2), rgba(86, 194, 255, 0.15));
+      transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease;
+    }
+
+    .cta:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255, 255, 255, 0.35);
+      box-shadow: 0 10px 35px rgba(86, 194, 255, 0.18);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 32px;
+      padding: 32px 20px 12px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 5vw, 42px);
+      margin: 0 0 18px;
+      letter-spacing: -0.5px;
+    }
+
+    .hero p {
+      margin: 0 0 16px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .hero .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .hero-card {
+      background: var(--gradient);
+      border-radius: 20px;
+      padding: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+    }
+
+    .hero-card h2 {
+      margin: 0 0 10px;
+      font-size: 24px;
+    }
+
+    .hero-card ul {
+      margin: 12px 0 0;
+      padding-left: 20px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    section {
+      margin-top: 42px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin: 0 0 14px;
+    }
+
+    .section-title span {
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid.two {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+
+    .grid.three {
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      transition: transform 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.18);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+    }
+
+    .card strong {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .card ul {
+      margin: 10px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .pill-row span {
+      padding: 6px 10px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      color: var(--muted);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .footer {
+      margin-top: 48px;
+      padding: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--muted);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 14px;
+    }
+
+    @media (max-width: 820px) {
+      header { position: static; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-card { order: -1; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <svg viewBox="0 0 120 120" role="img" aria-label="Mauro Gorrín">
+        <rect x="4" y="4" width="112" height="112" rx="20" ry="20" fill="url(#grad)" />
+        <defs>
+          <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#0b1a3b" />
+            <stop offset="100%" stop-color="#0f294d" />
+          </linearGradient>
+        </defs>
+        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#f8fbff" font-size="28" font-family="'Inter', sans-serif" font-weight="700">MG</text>
+      </svg>
+      <div>
+        <div style="font-size:16px; text-transform:uppercase; letter-spacing:1px; color:var(--muted);">Paid Media Studio</div>
+        <div style="font-size:18px; font-weight:700;">Mauro Gorrín</div>
+      </div>
+    </div>
+    <a class="cta" href="#contacto">Agenda una llamada</a>
+  </header>
+
+  <main class="page">
+    <section class="hero" aria-labelledby="hero-heading">
+      <div>
+        <div class="pill">🚀 Marketing rentable sin humo</div>
+        <h1 id="hero-heading">Estrategia digital y paid media para marcas que quieren crecer.</h1>
+        <p>Transformamos marcas en experiencias rentables con estrategias claras, creatividad que convierte y automatización inteligente que no se detiene.</p>
+        <div class="pill-row">
+          <span>Google Ads</span><span>Meta Ads</span><span>TikTok Ads</span><span>LinkedIn Ads</span><span>Automatización</span><span>Branding</span><span>CRM &amp; Integraciones</span>
+        </div>
+      </div>
+      <div class="hero-card">
+        <h2>Lo que obtienes</h2>
+        <p style="color: var(--muted); margin: 0 0 8px;">Acompañamiento end-to-end para lanzar, escalar y medir resultados.</p>
+        <ul>
+          <li>Estrategia a medida: objetivos, buyer persona y customer journey.</li>
+          <li>Gestión integral de paid media y remarketing multicanal.</li>
+          <li>Setups técnicos: GA4, GTM, Conversion API y server-side tagging.</li>
+          <li>Reportes claros con optimizaciones mensuales orientadas al ROI.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section aria-labelledby="estrategia">
+      <div class="section-title">
+        <span>🧭 Estrategia</span>
+        <h2 id="estrategia">Estrategia y Consultoría Digital</h2>
+      </div>
+      <div class="grid two">
+        <div class="card">
+          <strong>Auditorías completas</strong>
+          <p>Rendimiento, UX/UI, SEO, seguridad, RGPD y datos. Todo lo necesario para partir de una base sólida.</p>
+        </div>
+        <div class="card">
+          <strong>Plan y posicionamiento</strong>
+          <ul>
+            <li>Estrategias de marketing digital personalizadas.</li>
+            <li>Objetivos, buyer persona y customer journey claros.</li>
+            <li>Análisis de competencia y benchmarking estratégico.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <strong>Optimización de conversión</strong>
+          <p>Embudo y UX para maximizar conversiones y valor por cliente.</p>
+        </div>
+        <div class="card">
+          <strong>Consultoría continua</strong>
+          <p>Acompañamiento para equipos internos o externos con decisiones ágiles.</p>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="paidmedia">
+      <div class="section-title">
+        <span>💰 Paid Media</span>
+        <h2 id="paidmedia">Gestión de Publicidad Digital</h2>
+      </div>
+      <div class="grid two">
+        <div class="card">
+          <strong>Canales principales</strong>
+          <ul>
+            <li>Google Ads: Búsqueda, Display, Shopping, Discovery, YouTube y Maps.</li>
+            <li>Meta Ads: Facebook e Instagram (tráfico, leads, remarketing, awareness).</li>
+            <li>TikTok Ads, LinkedIn Ads y X Ads (Twitter).</li>
+            <li>Local Services Ads (LSA) para negocios locales.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <strong>Setups técnicos y medición</strong>
+          <ul>
+            <li>Seguimiento avanzado: GA4, GTM, Conversion API y server-side tagging.</li>
+            <li>Remarketing multicanal: Google + Meta + TikTok.</li>
+            <li>Reportes personalizados, análisis de ROI y optimizaciones mensuales.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="web">
+      <div class="section-title">
+        <span>🌐 Web</span>
+        <h2 id="web">Diseño y Desarrollo</h2>
+      </div>
+      <div class="grid three">
+        <div class="card">
+          <strong>Webs y ecommerce</strong>
+          <p>Diseño profesional, ecommerce y landings de conversión con agradecimientos optimizados.</p>
+        </div>
+        <div class="card">
+          <strong>Performance y SEO</strong>
+          <p>Velocidad, estructura, SEO técnico y experiencias móviles impecables.</p>
+        </div>
+        <div class="card">
+          <strong>Integraciones</strong>
+          <p>Analítica, CRM y mantenimiento para sitios existentes.</p>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="branding">
+      <div class="section-title">
+        <span>🎨 Branding</span>
+        <h2 id="branding">Branding e Identidad</h2>
+      </div>
+      <div class="grid two">
+        <div class="card">
+          <strong>Estrategia de marca</strong>
+          <ul>
+            <li>Diagnóstico y propuesta de valor.</li>
+            <li>Storytelling, tagline y arquetipo.</li>
+            <li>Branding experiencial y posicionamiento emocional.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <strong>Identidad visual y verbal</strong>
+          <p>Creación o rediseño de identidad con manual de uso (logo, paleta, tipografía, tono de voz).</p>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="social">
+      <div class="section-title">
+        <span>📱 Social & Contenido</span>
+        <h2 id="social">Gestión de Redes y Contenido</h2>
+      </div>
+      <div class="grid two">
+        <div class="card">
+          <strong>Gestión integral</strong>
+          <ul>
+            <li>Optimización y gestión en Instagram, Facebook, TikTok, X, Threads y LinkedIn.</li>
+            <li>Calendario de contenidos: posts, historias, reels, hilos y videos.</li>
+            <li>Estrategia de comunicación y fidelización.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <strong>Comunidades y formación</strong>
+          <p>Atención al cliente digital, gestión de comunidades y formación de equipos en Social Ads u orgánico.</p>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="seo">
+      <div class="section-title">
+        <span>✍️ SEO</span>
+        <h2 id="seo">SEO y Marketing de Contenidos</h2>
+      </div>
+      <div class="grid two">
+        <div class="card">
+          <strong>Estrategia orgánica</strong>
+          <ul>
+            <li>On-page y off-page: arquitectura y técnica.</li>
+            <li>Creación de blogs, artículos, copys y textos persuasivos.</li>
+            <li>Keyword research avanzado y metadatos optimizados.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <strong>Autoridad y sinergias</strong>
+          <p>Link building ético y estrategias integradas con campañas SEM y social.</p>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="automation">
+      <div class="section-title">
+        <span>🤖 Automatización</span>
+        <h2 id="automation">Automatización, Integraciones y CRM</h2>
+      </div>
+      <div class="grid two">
+        <div class="card">
+          <strong>Flujos y sincronización</strong>
+          <ul>
+            <li>Automatización con Make, n8n y Manychat.</li>
+            <li>Flujos de captación y seguimiento de leads.</li>
+            <li>Sincronización entre Ads, CRM, Email y WhatsApp.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <strong>Medición avanzada</strong>
+          <ul>
+            <li>GA4, GTM, ProfitMetrics, Dolnai, ClickCease y PPC Reveal.</li>
+            <li>Bots conversacionales y conversiones offline en CRM.</li>
+            <li>Dashboards en Looker Studio y reportes automatizados en PDF o video.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="creatividades">
+      <div class="section-title">
+        <span>🎥 Creatividad</span>
+        <h2 id="creatividades">Producción Audiovisual y Creatividades</h2>
+      </div>
+      <div class="grid three">
+        <div class="card">
+          <strong>Anuncios y piezas</strong>
+          <p>Creatividades para Meta, TikTok y YouTube con Canva y Veed.</p>
+        </div>
+        <div class="card">
+          <strong>Contenido audiovisual</strong>
+          <p>Estrategias de video y foto centradas en conversión.</p>
+        </div>
+        <div class="card">
+          <strong>Material promocional</strong>
+          <p>Diseño de banners, materiales físicos y digitales para campañas.</p>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="contacto" id="contacto">
+      <div class="section-title">
+        <span>Hablemos</span>
+        <h2 id="contacto">¿Listo para acelerar resultados?</h2>
+      </div>
+      <div class="card" style="background: var(--card-strong);">
+        <p style="margin: 0 0 10px; color: var(--muted);">Cuéntanos tus objetivos y preparamos un roadmap claro con acciones priorizadas.</p>
+        <div class="pill-row">
+          <span>Kick-off en 7 días</span>
+          <span>Reportes claros</span>
+          <span>Partner estratégico</span>
+        </div>
+        <div style="margin-top: 16px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
+          <a class="cta" href="mailto:hola@maurogorrin.com">hola@maurogorrin.com</a>
+          <a class="cta" style="background: rgba(255, 255, 255, 0.08);" href="https://cal.com" target="_blank" rel="noreferrer">Agenda una llamada</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div>Paid Media &amp; Marketing Digital — Mauro Gorrín</div>
+    <div>Hecho con enfoque en rendimiento, datos y creatividad.</div>
+  </footer>
+</body>
+</html>
