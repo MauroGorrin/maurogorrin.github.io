@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 120" role="img" aria-label="Domino's Pizza">
+  <rect width="320" height="120" rx="16" fill="#0b1f3f" />
+  <g transform="translate(26 18)">
+    <rect x="0" y="0" width="92" height="92" rx="18" fill="#e02a2d" />
+    <circle cx="26" cy="26" r="12" fill="#ffffff" />
+    <circle cx="66" cy="66" r="12" fill="#ffffff" />
+    <path d="M92 0v92H0l92-92z" fill="#1369b0" />
+  </g>
+  <text x="130" y="72" fill="#ffffff" font-family="'Inter', 'Segoe UI', system-ui" font-size="38" font-weight="800" letter-spacing="-1.2">DOMINO'S</text>
+</svg>

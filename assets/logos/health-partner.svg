@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 120" role="img" aria-label="Cliente sector salud">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#b4e1ff" />
+      <stop offset="100%" stop-color="#6fb2ff" />
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="320" height="120" rx="18" fill="#0a1227" />
+  <g transform="translate(22 18)">
+    <rect x="0" y="0" width="84" height="84" rx="18" fill="url(#g)" opacity="0.95" />
+    <rect x="18" y="12" width="16" height="60" rx="6" fill="#0a1227" />
+    <rect x="12" y="34" width="60" height="16" rx="6" fill="#0a1227" />
+    <circle cx="84" cy="84" r="9" fill="url(#g)" opacity="0.75" />
+  </g>
+  <text x="126" y="58" fill="#eaf5ff" font-family="'Inter', 'Segoe UI', system-ui" font-size="28" font-weight="700" letter-spacing="-0.8">Cliente Salud</text>
+  <text x="126" y="84" fill="#9bb7d6" font-family="'Inter', 'Segoe UI', system-ui" font-size="18" font-weight="600">Atención &amp; bienestar</text>
+</svg>
