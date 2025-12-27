@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 120" role="img" aria-label="Daka">
+  <rect width="320" height="120" rx="16" fill="#ffe146" />
+  <rect x="12" y="12" width="296" height="96" rx="12" fill="#ffe146" stroke="#1c2578" stroke-width="6" />
+  <text x="42" y="82" fill="#1c2578" font-family="'Inter', 'Segoe UI', system-ui" font-size="64" font-weight="800" letter-spacing="-2">Daka</text>
+</svg>

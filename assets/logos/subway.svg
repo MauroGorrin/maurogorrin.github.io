@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 120" role="img" aria-label="Subway">
+  <rect width="320" height="120" rx="16" fill="#f2f9ef" />
+  <g transform="translate(18 18)">
+    <path d="M0 42c0-24 20-42 44-42h112v24H50c-10 0-18 8-18 18s8 18 18 18h34V96H44C20 96 0 78 0 54z" fill="#f4c32f" />
+    <path d="M222 0c24 0 44 18 44 42s-20 42-44 42h-54V60h48c10 0 18-8 18-18s-8-18-18-18h-88V0h94z" fill="#009c3b" />
+  </g>
+  <text x="54" y="86" fill="#0a0a0a" font-family="'Inter', 'Segoe UI', system-ui" font-size="52" font-weight="800" letter-spacing="-1.4">SUBWAY</text>
+</svg>
