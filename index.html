@@ -1,319 +1,509 @@
-<!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mauro Gorrín | Estratega de Paid Media & Crecimiento</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #050a14;
-            color: #94a3b8;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .glass-card:hover {
-            background: rgba(255, 255, 255, 0.04);
-            border-color: rgba(255, 255, 255, 0.12);
-            transform: translateY(-8px);
-            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.5);
-        }
-        .gradient-text {
-            background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 50%, #6366f1 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .hero-glow {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            height: 900px;
-            background: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.2) 0%, rgba(99, 102, 241, 0.05) 40%, transparent 70%);
-            pointer-events: none;
-            z-index: 0;
-        }
-        .noise-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('https://grainy-gradients.vercel.app/noise.svg');
-            opacity: 0.04;
-            pointer-events: none;
-            z-index: 50;
-        }
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #050a14;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #1e293b;
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #334155;
-        }
-    </style>
-</head>
-<body class="antialiased overflow-x-hidden">
-    <div class="noise-bg"></div>
-    <div id="root"></div>
 
-    <script type="importmap">
-    {
-      "imports": {
-        "react": "https://esm.sh/react@19.2.3",
-        "react-dom/client": "https://esm.sh/react-dom@19.2.3/client",
-        "htm": "https://esm.sh/htm@3.1.1"
-      }
-    }
-    </script>
-    <script type="module">
-        import React from 'react';
-        import ReactDOM from 'react-dom/client';
-        import htm from 'htm';
+import React, { useState } from 'react';
+import { 
+  ArrowRight, 
+  Target, 
+  Megaphone, 
+  Layout, 
+  Share2, 
+  Search, 
+  Bot, 
+  Video, 
+  Zap, 
+  CheckCircle2, 
+  PenTool,
+  BarChart4,
+  Mail,
+  PieChart,
+  Linkedin,
+  Plus,
+  Minus,
+  Sparkles,
+  ShieldCheck,
+  TrendingUp,
+  Award,
+  Users,
+  BarChart3,
+  Rocket
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
 
-        const html = htm.bind(React.createElement);
+const CALENDLY_LINK = "https://calendly.com/maurogorrin55/30min-meeting-with-mauro";
 
-        const Navbar = () => {
-          const linkedinUrl = "https://www.linkedin.com/in/maurogorrin/";
-          const calendlyUrl = "https://calendly.com/maurogorrin55/30min-meeting-with-mauro";
+const FAQ_DATA = [
+  {
+    question: "¿En cuánto tiempo veré resultados en mis campañas?",
+    answer: "Los tiempos varían según el canal. Con Publicidad Digital (Ads), podemos generar tráfico y prospectos desde la primera semana. Para SEO y posicionamiento orgánico, los resultados sólidos suelen consolidarse entre los 3 y 6 meses, ya que requieren construir autoridad y optimización técnica."
+  },
+  {
+    question: "¿Cuál es la inversión mínima recomendada para publicidad?",
+    answer: "No hay un mínimo estricto, pero recomendamos un presupuesto que permita obtener datos suficientes para optimizar. Dependiendo de tu industria y objetivos, sugerimos empezar con montos que permitan testear creatividades y audiencias de forma efectiva."
+  },
+  {
+    question: "¿Cómo recibiré los reportes de resultados?",
+    answer: "Transparencia total. Te entregamos dashboards en tiempo real donde puedes ver tus métricas las 24 horas del día. Además, realizamos reuniones mensuales de seguimiento para analizar el rendimiento y ajustar la estrategia juntos."
+  },
+  {
+    question: "¿Qué tecnologías usan para las automatizaciones?",
+    answer: "Somos expertos en el stack moderno de automatización. Utilizamos herramientas líderes como Make (Integromat), n8n, ManyChat para WhatsApp/Instagram y Zapier para conectar tu CRM con el resto de tu operación de marketing."
+  },
+  {
+    question: "¿Trabajan con empresas de cualquier industria?",
+    answer: "Aunque tenemos mucha experiencia en Retail, SaaS y Servicios Profesionales, nuestra metodología basada en datos se adapta a casi cualquier sector que busque escalar su adquisición de clientes en línea de manera rentable."
+  },
+  {
+    question: "¿Es obligatorio firmar un contrato de permanencia larga?",
+    answer: "Creemos en los resultados, no en las ataduras. Trabajamos con acuerdos mensuales flexibles, aunque siempre recomendamos una visión a mediano y largo plazo para maximizar el retorno de tu inversión."
+  },
+  {
+    question: "¿Qué diferencia a su servicio de SEO de otras agencias?",
+    answer: "Nos enfocamos en el SEO Semántico y de Intención. No solo buscamos 'palabras clave' al azar, sino que optimizamos para que el usuario que llegue a tu web sea un cliente potencial real, mejorando la autoridad técnica y la experiencia de usuario."
+  },
+  {
+    question: "¿Cómo miden el éxito de una estrategia?",
+    answer: "Nos alejamos de las 'métricas de vanidad' como simples likes. Medimos el éxito basándonos en el ROI (Retorno de Inversión), el costo por adquisición (CPA) y la calidad real de los leads generados para tu equipo de ventas."
+  },
+  {
+    question: "¿Ofrecen servicios de diseño y desarrollo de sitios web?",
+    answer: "Sí, creamos sitios web de alto rendimiento, landing pages y tiendas en línea (ecommerce) totalmente optimizadas para la conversión. Todo lo que diseñamos tiene un enfoque estratégico para vender, no solo para verse bonito."
+  },
+  {
+    question: "¿Cuál es el proceso para comenzar a trabajar?",
+    answer: "El primer paso es una sesión de diagnóstico gratuita donde analizamos tu situación actual. Si vemos que podemos aportar valor real, diseñamos una propuesta personalizada y una hoja de ruta de ejecución para los primeros 90 días."
+  }
+];
 
-          return html`
-            <nav className="fixed top-0 left-0 right-0 z-50 bg-[#050a14]/80 backdrop-blur-2xl border-b border-white/5">
-              <div className="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
-                <div className="flex items-center group cursor-pointer">
-                  <span className="text-white text-xl font-black tracking-tighter transition-all duration-500 group-hover:scale-105">Mauro Gorrín</span>
-                  <div className="ml-5 hidden lg:flex items-center border-l border-white/10 pl-5">
-                    <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Paid Media Studio</span>
-                  </div>
+const FAQItem: React.FC<{ question: string; answer: string; isOpen: boolean; onClick: () => void }> = ({ question, answer, isOpen, onClick }) => (
+  <div className="border-b border-slate-100 last:border-0">
+    <button 
+      onClick={onClick}
+      className="w-full py-6 flex items-center justify-between text-left hover:bg-slate-50/50 transition-colors px-4 rounded-xl group"
+    >
+      <span className={`text-lg font-bold transition-colors ${isOpen ? 'text-[#3b82f6]' : 'text-[#111827]'}`}>
+        {question}
+      </span>
+      <div className={`flex-shrink-0 ml-4 w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center transition-all ${isOpen ? 'bg-[#3b82f6] border-[#3b82f6] text-white rotate-180' : 'text-slate-400 group-hover:border-slate-300'}`}>
+        {isOpen ? <Minus size={16} /> : <Plus size={16} />}
+      </div>
+    </button>
+    <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-96 pb-6' : 'max-h-0'}`}>
+      <p className="text-slate-500 leading-relaxed px-4 font-medium">
+        {answer}
+      </p>
+    </div>
+  </div>
+);
+
+const Home: React.FC = () => {
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+
+  return (
+    <div className="bg-white">
+      {/* Hero Section */}
+      <section className="pt-44 pb-24 px-6 overflow-hidden">
+        <div className="max-w-5xl mx-auto text-center">
+          <div className="inline-flex items-center space-x-2 bg-blue-50 border border-blue-100 px-4 py-1.5 rounded-full text-[#3b82f6] text-xs font-bold mb-8 uppercase tracking-wider">
+            <Zap size={14} className="fill-current" />
+            <span>Agencia de Marketing Digital</span>
+          </div>
+          
+          <h1 className="text-[3.5rem] md:text-[5.5rem] font-extrabold tracking-tight text-[#111827] mb-8 leading-[1.05]">
+            Llevamos tu marca <br />
+            <span className="gradient-text">al siguiente nivel</span>
+          </h1>
+          
+          <p className="text-slate-500 text-lg md:text-xl max-w-3xl mx-auto mb-12 font-medium leading-relaxed">
+            Estrategias de marketing digital que generan resultados reales.<br />
+            Diseño, tecnología y automatización inteligente.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
+            <a 
+              href={CALENDLY_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto bg-[#009688] hover:bg-[#00796b] text-white px-10 py-4 rounded-full font-bold flex items-center justify-center transition-all shadow-lg shadow-emerald-500/20"
+            >
+              Trabajemos Juntos <ArrowRight className="ml-2" size={20} />
+            </a>
+            <button className="w-full sm:w-auto bg-white border border-slate-200 hover:bg-slate-50 text-slate-800 px-10 py-4 rounded-full font-bold flex items-center justify-center transition-all">
+              Conectar en LinkedIn <Linkedin className="ml-2 text-blue-600" size={20} />
+            </button>
+          </div>
+
+          {/* Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto border-t border-slate-100 pt-16">
+            <StatItem number="100+" label="Proyectos Completados" />
+            <StatItem number="50+" label="Clientes Activos" />
+            <StatItem number="300%" label="ROI Promedio" />
+            <StatItem number="24/7" label="Soporte Disponible" />
+          </div>
+        </div>
+      </section>
+
+      {/* Services Grid */}
+      <section className="py-24 px-6 bg-[#f8fafc]">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-extrabold mb-4 text-[#111827]">
+              Servicios que <br />
+              <span className="gradient-text">generan resultados</span>
+            </h2>
+            <p className="text-slate-500 text-lg font-medium">Soluciones integrales de marketing digital para hacer crecer tu negocio</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <ServiceCard 
+              icon={<Target className="text-blue-500" />}
+              title="Estrategia y Consultoría Digital"
+              desc="Auditorías web completas, desarrollo de estrategias personalizadas, análisis de competencia y optimización de embudos de conversión."
+              features={["Auditorías web", "Buyer persona", "Análisis de competencia"]}
+              bgColor="bg-blue-50"
+            />
+            <ServiceCard 
+              icon={<Megaphone className="text-sky-400" />}
+              title="Gestión de Publicidad Digital"
+              desc="Campañas rentables en Google Ads, Meta Ads, TikTok, LinkedIn y más. Seguimiento avanzado y optimización continua."
+              features={["Google Ads", "Meta Ads", "TikTok Ads"]}
+              bgColor="bg-sky-50"
+            />
+             <ServiceCard 
+              icon={<Layout className="text-blue-600" />}
+              title="Diseño y Desarrollo Web"
+              desc="Sitios web profesionales, ecommerce y landing pages optimizadas para conversión y experiencia de usuario."
+              features={["Sitios web y ecommerce", "Landing pages", "Optimización técnica"]}
+              bgColor="bg-indigo-50"
+            />
+            <ServiceCard 
+              icon={<PenTool className="text-blue-400" />}
+              title="Branding e Identidad Corporativa"
+              desc="Construimos marcas memorables con identidad visual, storytelling y posicionamiento estratégico."
+              features={["Diagnóstico", "Identidad visual", "Manual de marca"]}
+              bgColor="bg-slate-50"
+            />
+            <ServiceCard 
+              icon={<Share2 className="text-rose-400" />}
+              title="Gestión de Redes Sociales"
+              desc="Estrategia, contenido y gestión de comunidades en todas las plataformas sociales relevantes."
+              features={["Instagram, FB, TikTok", "Calendario de contenidos", "Community management"]}
+              bgColor="bg-rose-50"
+            />
+            <ServiceCard 
+              icon={<Search className="text-blue-500" />}
+              title="SEO y Marketing de Contenidos"
+              desc="Posicionamiento orgánico sostenible con estrategia de contenidos y optimización técnica avanzada."
+              features={["SEO on-page y off-page", "Keyword research", "Creación de contenido"]}
+              bgColor="bg-blue-50"
+            />
+            <ServiceCard 
+              icon={<Bot className="text-indigo-400" />}
+              title="Automatización e Integraciones"
+              desc="Automatización inteligente de procesos con Make, n8n, ManyChat y conexión con CRM."
+              features={["Flujos automáticos", "Sincronización CRM", "Bots conversacionales"]}
+              bgColor="bg-indigo-50"
+            />
+            <ServiceCard 
+              icon={<Video className="text-sky-500" />}
+              title="Producción Audiovisual"
+              desc="Creatividades impactantes, vídeos publicitarios y contenido audiovisual para todas las plataformas."
+              features={["Anuncios y videos", "Contenido para RRSS", "Producción fotográfica"]}
+              bgColor="bg-sky-50"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Improved Work Process Section */}
+      <section id="proceso" className="py-32 px-6 relative overflow-hidden">
+        {/* Background glow effects */}
+        <div className="absolute top-1/2 left-0 w-64 h-64 bg-blue-500/5 blur-[100px] rounded-full -z-10"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-emerald-500/5 blur-[120px] rounded-full -z-10"></div>
+
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-24">
+            <div className="inline-flex items-center space-x-2 bg-blue-50 border border-blue-100 px-4 py-1.5 rounded-full text-[#3b82f6] text-xs font-bold mb-4 uppercase tracking-widest">
+              <span>Metodología de Éxito</span>
+            </div>
+            <h2 className="text-4xl md:text-6xl font-extrabold mb-6 text-[#111827] tracking-tight">
+              Un camino claro hacia <br />
+              <span className="gradient-text">tus objetivos</span>
+            </h2>
+            <p className="text-slate-500 text-lg max-w-2xl mx-auto font-medium">Nuestra metodología de 3 fases diseñada para maximizar la eficiencia y el crecimiento sostenible de tu marca.</p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 relative">
+            {/* Horizontal Line Connector (Only Desktop) */}
+            <div className="hidden lg:block absolute top-[15%] left-[15%] right-[15%] h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent -z-10"></div>
+
+            <ProcessStep 
+              num="01"
+              icon={<ShieldCheck className="text-blue-500" size={32} />}
+              title="Auditoría y Diagnóstico 360"
+              desc="No disparamos a ciegas. Analizamos tu ecosistema digital actual, tu competencia y el comportamiento de tu audiencia para encontrar las grietas y oportunidades de oro."
+              points={["Análisis de mercado", "Auditoría técnica SEO", "Estudio de competencia"]}
+              color="blue"
+            />
+            <ProcessStep 
+              num="02"
+              icon={<Sparkles className="text-emerald-500" size={32} />}
+              title="Arquitectura Estratégica"
+              desc="Diseñamos un plan maestro personalizado. Definimos canales, mensajes clave, embudos de conversión y automatizaciones que trabajarán por ti mientras duermes."
+              points={["Plan de contenidos", "Estrategia Paid Media", "Flujos de automatización"]}
+              color="emerald"
+            />
+            <ProcessStep 
+              num="03"
+              icon={<TrendingUp className="text-indigo-500" size={32} />}
+              title="Ejecución y Escalado"
+              desc="Implementamos, medimos y optimizamos en tiempo real. Utilizamos datos reales para escalar lo que funciona y corregir lo que no, garantizando el mejor ROI posible."
+              points={["Optimización continua", "Reportes de impacto", "Escalado de inversión"]}
+              color="indigo"
+              isLast
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Achievements Section (Replaces Logos Trust Section) */}
+      <section className="py-24 px-6 bg-[#0f172a] text-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-20">
+            <h2 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight">
+              Impacto que habla <br />
+              <span className="text-blue-400">por sí mismo</span>
+            </h2>
+            <p className="text-slate-400 text-lg max-w-2xl mx-auto font-medium">
+              No se trata de quiénes somos, sino de lo que hemos logrado transformar para nuestros clientes. Resultados tangibles en industrias competitivas.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <AchievementItem 
+              icon={<TrendingUp className="text-emerald-400" />}
+              metric="+245%"
+              title="Crecimiento en Retail"
+              desc="Incremento masivo en ventas orgánicas para una de las cadenas de tecnología más grandes del país en solo 6 meses."
+            />
+            <AchievementItem 
+              icon={<Users className="text-blue-400" />}
+              metric="1.2M+"
+              title="Alcance Mensual"
+              desc="Lideramos estrategias de contenido viral que posicionaron a marcas líderes frente a millones de clientes potenciales."
+            />
+            <AchievementItem 
+              icon={<BarChart3 className="text-indigo-400" />}
+              metric="-40%"
+              title="Optimización de CPA"
+              desc="Redujimos el costo por adquisición en campañas de Ads manteniendo el volumen de leads calificados."
+            />
+            <AchievementItem 
+              icon={<Rocket className="text-rose-400" />}
+              metric="20h+"
+              title="Tiempo Ahorrado"
+              desc="Implementamos flujos de automatización que liberaron horas operativas semanales al equipo de ventas."
+            />
+          </div>
+
+          <div className="mt-20 pt-16 border-t border-slate-800 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h3 className="text-3xl font-bold mb-6">Expertos en escalar negocios digitales</h3>
+              <p className="text-slate-400 leading-relaxed mb-8">
+                Nuestra experiencia no se basa en teoría, sino en la ejecución diaria de estrategias para marcas que dominan el mercado local e internacional. Hemos manejado presupuestos millonarios en pauta y optimizado ecosistemas web para millones de usuarios.
+              </p>
+              <div className="flex flex-col space-y-4">
+                <div className="flex items-start space-x-3">
+                  <CheckCircle2 className="text-emerald-400 mt-1 flex-shrink-0" size={20} />
+                  <span>Dominio absoluto de Google Search y Social Ads.</span>
                 </div>
-                
-                <div className="flex items-center gap-6">
-                  <a href=${linkedinUrl} target="_blank" className="hidden sm:flex text-slate-400 hover:text-white transition-colors items-center gap-2 group text-[11px] font-black tracking-widest uppercase">
-                    LinkedIn
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-y-[-2px] transition-transform duration-300"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
-                  </a>
-                  <a href=${calendlyUrl} target="_blank" className="bg-white text-black px-6 py-3 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-indigo-500 hover:text-white transition-all active:scale-95 shadow-xl shadow-white/5">
-                    Agendar
-                  </a>
+                <div className="flex items-start space-x-3">
+                  <CheckCircle2 className="text-emerald-400 mt-1 flex-shrink-0" size={20} />
+                  <span>Arquitectura de conversión (CRO) validada con datos.</span>
                 </div>
-              </div>
-            </nav>
-          `;
-        };
-
-        const ServiceSection = ({ icon, tag, title, cards }) => html`
-          <section className="py-16 md:py-24 border-b border-white/5 last:border-0 relative">
-            <div className="max-w-7xl mx-auto px-6">
-              <div className="flex flex-col mb-12">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 shadow-xl shadow-indigo-500/5">${icon}</div>
-                  <span className="text-[10px] font-black uppercase tracking-[0.4em] text-indigo-400/80">${tag}</span>
+                <div className="flex items-start space-x-3">
+                  <CheckCircle2 className="text-emerald-400 mt-1 flex-shrink-0" size={20} />
+                  <span>Automatización inteligente para reducir fricción en ventas.</span>
                 </div>
-                <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter leading-[1] max-w-3xl">${title}</h2>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                ${cards.map((card, idx) => html`
-                  <div key=${idx} className="glass-card group p-10 rounded-[2.5rem] flex flex-col h-full hover:bg-indigo-500/[0.02]">
-                    <div className="mb-6">
-                      <h3 className="text-xl font-black text-white group-hover:text-indigo-400 transition-colors mb-4 tracking-tight">${card.title}</h3>
-                      <p className="text-slate-400 leading-relaxed text-[15px] font-medium">${card.description}</p>
-                    </div>
-                    
-                    ${card.points && html`
-                      <div className="mt-auto pt-6 border-t border-white/10">
-                        <ul className="space-y-4">
-                          ${card.points.map((point, pIdx) => html`
-                            <li key=${pIdx} className="flex items-start gap-3 text-xs text-slate-500 leading-snug font-medium">
-                              <svg className="w-4 h-4 mt-0.5 text-indigo-500/60 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                              </svg>
-                              <span>${point}</span>
-                            </li>
-                          `)}
-                        </ul>
-                      </div>
-                    `}
-                  </div>
-                `)}
               </div>
             </div>
-          </section>
-        `;
-
-        const App = () => {
-          const linkedinUrl = "https://www.linkedin.com/in/maurogorrin/";
-          const calendlyUrl = "https://calendly.com/maurogorrin55/30min-meeting-with-mauro";
-
-          const stats = [
-            { label: "ROI Promedio", value: "4.5x" },
-            { label: "Inversión Gestionada", value: "+$2M" },
-            { label: "Marcas Escaladas", value: "15+" },
-            { label: "Retención de Clientes", value: "95%" }
-          ];
-
-          const process = [
-            { step: "01", title: "Auditoría Profunda", desc: "Encontramos las fugas de dinero en tu cuenta de anuncios en menos de 48 horas mediante análisis de datos históricos." },
-            { step: "02", title: "Estrategia de Asalto", desc: "Diseñamos un plan de pauta multicanal con frameworks de segmentación avanzada enfocados en retorno directo." },
-            { step: "03", title: "Escalamiento Agresivo", desc: "Subimos el presupuesto de los ganadores (Winner Ads) mientras mantenemos el CPA bajo control." }
-          ];
-
-          const nextSteps = [
-            { id: "1", title: "Llamada de Descubrimiento", desc: "Una sesión de 30 minutos para entender tus objetivos, tus cuellos de botella y si somos el aliado perfecto para tu marca." },
-            { id: "2", title: "Auditoría & Propuesta", desc: "Analizamos tu cuenta de anuncios y creamos una hoja de ruta personalizada con proyecciones de retorno claras." },
-            { id: "3", title: "Kick-off & Ejecución", desc: "Implementamos el tracking avanzado, optimizamos tus creativos y encendemos la maquinaria de escalamiento." }
-          ];
-
-          const sections = [
-            {
-              icon: html`<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>`,
-              tag: "ESTRATEGIA",
-              title: "Consultoría y Auditoría de Performance",
-              cards: [
-                { title: "Análisis de Unit Economics", description: "No solo perseguimos el ROAS. Validamos tu LTV y CAC para garantizar rentabilidad real." },
-                { title: "Tracking & Atribución", description: "Configuramos ecosistemas de medición precisos. Desde CAPI hasta Server-Side Tracking.", points: ["Conversions API de Meta", "GTM Server-Side Setup", "Modelado de Atribución"] },
-                { title: "Framework de Creative Strategy", description: "Desarrollamos el guionaje de anuncios basado en disparadores psicológicos para maximizar el Hook Rate." }
-              ]
-            },
-            {
-              icon: html`<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>`,
-              tag: "PAID MEDIA",
-              title: "Gestión de Pauta de Alto Rendimiento",
-              cards: [
-                { title: "Meta Ads Scaling", description: "Estructuras Advantage+ y escalamiento horizontal/vertical.", points: ["Escalamiento con CBO/ABO", "Lookalikes 1-10%", "Creative Testing"] },
-                { title: "Google Ads Mastery", description: "Capturamos la demanda de alta intención. Search quirúrgico y Performance Max.", points: ["Estructuras Hagakure", "Smart Bidding", "Dominio de Search & YouTube"] },
-                { title: "Automatización con Make", description: "Conectamos todo tu ecosistema de pauta. Cero entrada manual de datos.", points: ["Sync Ads → CRM", "Alertas vía WhatsApp/Slack", "Limpieza de Datos"] }
-              ]
-            }
-          ];
-
-          return html`
-            <div className="min-h-screen relative bg-[#050a14] selection:bg-indigo-500/30">
-              <div className="hero-glow"></div>
-              <${Navbar} />
-
-              <main className="relative z-10 pt-20">
-                <header className="max-w-7xl mx-auto px-6 py-8 lg:py-16 flex flex-col items-center text-center">
-                  <div className="inline-flex items-center gap-2 bg-indigo-500/10 border border-indigo-500/20 px-4 py-2 rounded-full mb-8 shadow-lg shadow-indigo-500/5">
-                    <span className="flex h-2 w-2 rounded-full bg-indigo-400 animate-pulse"></span>
-                    <span className="text-[10px] font-black text-indigo-300 tracking-[0.2em] uppercase">Estrategia de Crecimiento con Sentido</span>
-                  </div>
-                  
-                  <h1 className="text-5xl md:text-8xl font-black text-white mb-6 leading-[1.05] tracking-tighter max-w-5xl">
-                    Estrategias de Paid Media diseñadas para <span className="gradient-text">crecer con sentido.</span>
-                  </h1>
-                  
-                  <p className="text-lg md:text-2xl text-slate-400 mb-10 leading-relaxed max-w-3xl font-medium">
-                    Acompañamos marcas ambiciosas a escalar con campañas <span className="text-white">honestas, medibles</span> y enfocadas en lo que importa: el negocio.
-                  </p>
-                  
-                  <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-                    <a href=${calendlyUrl} target="_blank" className="group flex items-center justify-center gap-3 bg-white text-black px-12 py-5 rounded-2xl font-black text-lg hover:bg-indigo-500 hover:text-white transition-all duration-500 shadow-2xl shadow-white/5 active:scale-95">
-                      Trabajemos juntos
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                    </a>
-                    <a href=${linkedinUrl} target="_blank" className="flex items-center justify-center gap-3 bg-white/5 border border-white/10 text-white px-10 py-5 rounded-2xl font-bold text-lg hover:bg-white/10 transition-all active:scale-95">
-                      Conectar en LinkedIn
-                    </a>
-                  </div>
-
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-20 mt-16 py-8 border-y border-white/5 w-full">
-                    ${stats.map((stat, i) => html`
-                      <div key=${i} className="flex flex-col">
-                        <span className="text-3xl md:text-5xl font-black text-white mb-1 tracking-tighter">${stat.value}</span>
-                        <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">${stat.label}</span>
-                      </div>
-                    `)}
-                  </div>
-                </header>
-
-                <section className="max-w-7xl mx-auto px-6 py-12 md:py-20">
-                  <div className="flex flex-col lg:flex-row gap-12 items-start">
-                    <div className="lg:sticky lg:top-32 max-w-md">
-                      <span className="text-[10px] font-black text-indigo-400 uppercase tracking-[0.4em]">Nuestra Metodología</span>
-                      <h2 className="text-4xl md:text-6xl font-black text-white mt-4 mb-6 tracking-tighter leading-none">Cómo llevamos tu marca al siguiente nivel.</h2>
-                      <p className="text-slate-400 text-lg leading-relaxed font-medium">No somos solo una agencia; somos tus aliados estratégicos enfocados en la ejecución técnica y la confianza.</p>
-                    </div>
-                    
-                    <div className="flex-1 space-y-8">
-                      ${process.map((p, i) => html`
-                        <div key=${i} className="glass-card p-8 md:p-12 rounded-[2.5rem] border-l-4 border-l-indigo-500">
-                          <span className="text-indigo-500 font-black text-3xl opacity-50 block mb-4">${p.step}</span>
-                          <h3 className="text-2xl font-black text-white mb-3 tracking-tight">${p.title}</h3>
-                          <p className="text-slate-400 text-base leading-relaxed font-medium">${p.desc}</p>
-                        </div>
-                      `)}
-                    </div>
-                  </div>
-                </section>
-
-                <div className="space-y-0">
-                  ${sections.map((section, idx) => html`<${ServiceSection} key=${idx} ...${section} />`)}
+            <div className="bg-slate-800/50 p-10 rounded-[3rem] border border-slate-700 backdrop-blur-sm">
+              <div className="mb-8">
+                <div className="text-4xl font-black text-white mb-2">ROI Real</div>
+                <div className="text-slate-400 text-sm font-bold uppercase tracking-widest">Enfoque a Resultados</div>
+              </div>
+              <p className="text-slate-300 italic mb-8 leading-relaxed">
+                "La mayoría de las agencias se enfocan en likes e impresiones. Nosotros nos enfocamos en que tu inversión retorne multiplicada en facturación real."
+              </p>
+              <div className="flex items-center space-x-4">
+                <div className="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
+                  <Award size={24} />
                 </div>
-
-                <section className="max-w-7xl mx-auto px-6 py-16 md:py-24 border-t border-white/5">
-                  <div className="text-center mb-16">
-                    <span className="text-[10px] font-black text-indigo-400 uppercase tracking-[0.4em] mb-4 block">El Camino</span>
-                    <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter">¿Cómo empezamos nuestra colaboración?</h2>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    ${nextSteps.map((step, idx) => html`
-                      <div key=${idx} className="relative group p-10 glass-card rounded-[2.5rem] border border-white/5 hover:border-indigo-500/30 transition-all duration-500">
-                        <div className="absolute -top-6 left-10 w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center font-black text-white text-xl shadow-xl shadow-indigo-600/20 group-hover:scale-110 transition-transform">${step.id}</div>
-                        <h3 className="text-2xl font-black text-white mt-4 mb-4 tracking-tight">${step.title}</h3>
-                        <p className="text-slate-400 text-base leading-relaxed font-medium">${step.desc}</p>
-                      </div>
-                    `)}
-                  </div>
-                </section>
-
-                <section className="max-w-7xl mx-auto px-6 py-16 md:py-24">
-                  <div className="glass-card p-10 md:p-20 rounded-[3rem] text-center relative overflow-hidden border-indigo-500/20 shadow-2xl shadow-indigo-500/10">
-                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-indigo-500 to-transparent opacity-50"></div>
-                    <div className="relative z-10 max-w-4xl mx-auto">
-                      <h2 className="text-4xl md:text-7xl font-black text-white mb-8 tracking-tighter leading-[0.9]">Hablemos de cómo hacer crecer tu marca de forma inteligente.</h2>
-                      <p className="text-lg md:text-xl text-slate-400 mb-10 leading-relaxed font-medium">Analizamos tu caso, definimos objetivos claros y trazamos una hoja de ruta realista para crecer con Paid Media.</p>
-                      <div className="flex flex-col items-center gap-6">
-                        <a href=${calendlyUrl} target="_blank" className="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-500 text-white px-16 py-7 rounded-[1.5rem] font-black text-2xl shadow-2xl shadow-indigo-600/30 transition-all hover:scale-105 active:scale-95">Trabajemos juntos</a>
-                        <p className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.2em]">Sin compromisos — Solo soluciones honestas</p>
-                      </div>
-                    </div>
-                  </div>
-                </section>
-              </main>
-
-              <footer className="border-t border-white/5 py-12 bg-[#02060f]">
-                <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
-                  <div className="flex flex-col items-center md:items-start">
-                    <span className="text-white font-black tracking-tighter text-lg mb-2">Mauro Gorrín</span>
-                    <span className="text-[10px] text-slate-600 font-bold uppercase tracking-[0.4em]">Paid Media Studio 2024</span>
-                  </div>
-                  <a href=${linkedinUrl} target="_blank" className="text-slate-500 hover:text-white transition-all">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
-                  </a>
+                <div>
+                  <div className="font-bold text-white">Mauro Gorrín</div>
+                  <div className="text-slate-500 text-xs uppercase font-black">Fundador & Estratega</div>
                 </div>
-              </footer>
+              </div>
             </div>
-          `;
-        };
+          </div>
+        </div>
+      </section>
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(html`<${App} />`);
-    </script>
-</body>
-</html>
+      {/* Certifications */}
+      <section className="py-24 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-extrabold mb-4 text-[#111827]">Certificaciones y Acreditaciones</h2>
+            <p className="text-slate-500 text-lg">Experto certificado en las principales plataformas de publicidad digital</p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+            <CertCard title="Google Ads" desc="Certified Google Ads Expert en Search, Display, Shopping y Videomarketing" icon={<BarChart4 className="text-indigo-400" />} />
+            <CertCard title="Meta Ads" desc="Meta Business Partner certificado en Facebook Ads y Instagram Advertising" icon={<Target className="text-indigo-600" />} />
+            <CertCard title="TikTok Ads" desc="Especialista certificado en TikTok For Business y Campaign Management" icon={<Share2 className="text-indigo-400" />} />
+            <CertCard title="LinkedIn Ads" desc="Experto certificado en LinkedIn Campaign Manager y B2B Marketing" icon={<PenTool className="text-indigo-300" />} />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <CertCard title="SEO & SEM" desc="Especialista en optimización orgánica y estrategias de búsqueda pagada" icon={<Search className="text-blue-400" />} />
+            <CertCard title="Analytics & BI" desc="Certificado en Google Analytics 4 y análisis de datos avanzado" icon={<Layout className="text-blue-300" />} />
+            <CertCard title="Email Marketing" desc="Especialista en automatización y estrategias de email segmentado" icon={<Mail className="text-red-400" />} />
+            <CertCard title="Inbound Marketing" desc="HubSpot Certified Professional en metodología inbound" icon={<Target className="text-red-500" />} />
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-24 px-6 bg-slate-50">
+        <div className="max-w-3xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-extrabold mb-4 text-[#111827]">Preguntas Frecuentes</h2>
+            <p className="text-slate-500 text-lg">Resolvemos tus dudas sobre cómo podemos impulsar tu negocio.</p>
+          </div>
+          
+          <div className="bg-white rounded-[2.5rem] p-8 md:p-12 shadow-sm border border-slate-100">
+            {FAQ_DATA.map((faq, index) => (
+              <FAQItem 
+                key={index}
+                question={faq.question}
+                answer={faq.answer}
+                isOpen={openFaqIndex === index}
+                onClick={() => setOpenFaqIndex(openFaqIndex === index ? null : index)}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA Section */}
+      <section id="contacto" className="py-44 px-6 bg-white border-t border-slate-100 overflow-hidden relative">
+        <div className="max-w-5xl mx-auto text-center">
+          <div className="inline-flex items-center space-x-2 bg-emerald-50 border border-emerald-100 px-4 py-1.5 rounded-full text-[#059669] text-xs font-bold mb-8 uppercase tracking-wider">
+            <Zap size={14} className="fill-current" />
+            <span>Hablemos de tu proyecto</span>
+          </div>
+          
+          <h2 className="text-[3.5rem] md:text-[5.5rem] font-extrabold tracking-tight text-[#111827] mb-8 leading-[1.05]">
+            ¿Listo para llevar tu marca <br />
+            <span className="gradient-text">al siguiente nivel?</span>
+          </h2>
+          
+          <p className="text-slate-500 text-lg md:text-xl max-w-3xl mx-auto mb-12 font-medium leading-relaxed">
+            Trabajemos juntos para transformar tu presencia digital con estrategias que generan resultados reales y medibles. Nuestro equipo está listo para ayudarte a escalar.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a 
+              href={CALENDLY_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto bg-[#009688] hover:bg-[#00796b] text-white px-12 py-5 rounded-full font-bold flex items-center justify-center transition-all shadow-xl shadow-emerald-500/20 text-lg"
+            >
+              Trabajemos Juntos <ArrowRight className="ml-2" size={24} />
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+const StatItem: React.FC<{ number: string; label: string }> = ({ number, label }) => (
+  <div className="flex flex-col items-center">
+    <span className="text-4xl md:text-5xl font-black text-[#3b82f6] mb-3">{number}</span>
+    <span className="text-xs font-bold text-slate-500 uppercase tracking-widest text-center">{label}</span>
+  </div>
+);
+
+const AchievementItem: React.FC<{ icon: React.ReactNode; metric: string; title: string; desc: string }> = ({ icon, metric, title, desc }) => (
+  <div className="p-8 rounded-[2.5rem] bg-white/5 border border-white/10 hover:bg-white/[0.08] transition-all group">
+    <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+      {icon}
+    </div>
+    <div className="text-4xl font-black mb-1 text-white">{metric}</div>
+    <h3 className="text-lg font-bold mb-3 text-slate-200">{title}</h3>
+    <p className="text-slate-400 text-sm leading-relaxed">{desc}</p>
+  </div>
+);
+
+const ServiceCard: React.FC<{ icon: React.ReactNode; title: string; desc: string; features: string[]; bgColor: string }> = ({ icon, title, desc, features, bgColor }) => (
+  <div className={`service-card p-10 rounded-[2.5rem] bg-white border border-slate-100 flex flex-col h-full shadow-sm`}>
+    <div className={`w-14 h-14 rounded-2xl ${bgColor} flex items-center justify-center mb-8`}>
+      {icon}
+    </div>
+    <h3 className="text-xl font-extrabold mb-4 text-[#111827] leading-tight">{title}</h3>
+    <p className="text-slate-500 text-sm leading-relaxed mb-8 flex-grow">{desc}</p>
+    <ul className="space-y-3 pt-6 border-t border-slate-50">
+      {features.map((f, i) => (
+        <li key={i} className="flex items-center text-xs font-bold text-slate-600">
+          <CheckCircle2 size={14} className="text-[#10b981] mr-2" />
+          {f}
+        </li>
+      ))}
+    </ul>
+  </div>
+);
+
+const ProcessStep: React.FC<{ num: string; icon: React.ReactNode; title: string; desc: string; points: string[]; color: 'blue' | 'emerald' | 'indigo'; isLast?: boolean }> = ({ num, icon, title, desc, points, color, isLast }) => {
+  const colorMap = {
+    blue: 'bg-blue-50 border-blue-100 text-blue-500',
+    emerald: 'bg-emerald-50 border-emerald-100 text-emerald-500',
+    indigo: 'bg-indigo-50 border-indigo-100 text-indigo-500'
+  };
+
+  return (
+    <div className="group relative">
+      <div className={`p-10 rounded-[3rem] bg-white border border-slate-100 flex flex-col h-full shadow-sm group-hover:shadow-2xl group-hover:shadow-blue-500/5 group-hover:-translate-y-2 transition-all duration-500`}>
+        <div className="flex items-center justify-between mb-8">
+          <div className={`w-16 h-16 rounded-2xl ${colorMap[color]} border flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-500`}>
+            {icon}
+          </div>
+          <span className={`text-6xl font-black ${color === 'blue' ? 'text-blue-50' : color === 'emerald' ? 'text-emerald-50' : 'text-indigo-50'} group-hover:opacity-100 transition-opacity`}>
+            {num}
+          </span>
+        </div>
+        
+        <h3 className="text-2xl font-extrabold mb-4 text-[#111827] leading-tight">{title}</h3>
+        <p className="text-slate-500 text-sm leading-relaxed font-medium mb-8 flex-grow">{desc}</p>
+        
+        <div className="space-y-3 pt-6 border-t border-slate-50">
+          {points.map((p, i) => (
+            <div key={i} className="flex items-center text-xs font-bold text-slate-600">
+              <div className={`w-1.5 h-1.5 rounded-full mr-2 ${color === 'blue' ? 'bg-blue-400' : color === 'emerald' ? 'bg-emerald-400' : 'bg-indigo-400'}`}></div>
+              {p}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const CertCard: React.FC<{ title: string; desc: string; icon: React.ReactNode }> = ({ title, desc, icon }) => (
+  <div className="p-8 rounded-[2rem] bg-slate-50/80 border border-slate-100 flex flex-col h-full">
+    <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center mb-6 shadow-sm">
+      {icon}
+    </div>
+    <h4 className="text-lg font-extrabold mb-3 text-[#111827]">{title}</h4>
+    <p className="text-slate-500 text-xs font-medium leading-relaxed">{desc}</p>
+  </div>
+);
+
+export default Home;
