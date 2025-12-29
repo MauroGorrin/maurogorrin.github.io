@@ -20,7 +20,7 @@
     <style>
         :root {
             --primary: #3b82f6;
-            --secondary: #10b981;
+            --emerald: #10b981;
         }
         body {
             font-family: 'Inter', sans-serif;
@@ -28,18 +28,19 @@
             color: #111827;
             overflow-x: hidden;
         }
+        /* Efecto de grano premium */
         body::before {
             content: "";
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            opacity: 0.02;
+            opacity: 0.015;
             z-index: 9999;
             pointer-events: none;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
         h1, h2, h3, h4 {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            letter-spacing: -0.05em;
+            letter-spacing: -0.04em;
             line-height: 0.9;
         }
         .gradient-text {
@@ -48,45 +49,472 @@
             -webkit-text-fill-color: transparent;
         }
         .outline-text {
-            -webkit-text-stroke: 1.5px rgba(15, 23, 42, 0.2);
+            -webkit-text-stroke: 1.5px rgba(15, 23, 42, 0.15);
             color: transparent;
         }
         .glass-nav {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
         }
         .bento-item {
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .bento-item:hover {
-            transform: translateY(-8px);
+            transform: translateY(-10px) scale(1.01);
             box-shadow: 0 40px 80px -15px rgba(0, 0, 0, 0.08);
         }
-        .ad-featured-card {
-            background: linear-gradient(160deg, #0f172a 0%, #1e293b 100%);
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, opacity 0.4s ease-out;
+            opacity: 0;
         }
+        .faq-item.active .faq-content {
+            max-height: 500px;
+            opacity: 1;
+        }
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+            background-color: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+        .strategy-card {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        .float-anim { animation: float 6s ease-in-out infinite; }
     </style>
 <script type="importmap">
 {
   "imports": {
-    "react": "https://esm.sh/react@^19.2.3",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/",
     "@google/genai": "https://esm.sh/@google/genai@^1.34.0",
+    "react": "https://esm.sh/react@^19.2.3",
     "react-router-dom": "https://esm.sh/react-router-dom@^7.11.0",
+    "react/": "https://esm.sh/react@^19.2.3/",
     "lucide-react": "https://esm.sh/lucide-react@^0.562.0"
   }
 }
 </script>
 </head>
-<body>
+<body class="antialiased">
 
-    <div id="root"></div>
+    <!-- Navegación -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 px-6 pt-6 transition-all duration-500">
+        <div class="max-w-6xl mx-auto glass-nav rounded-full py-4 px-8 flex items-center justify-between shadow-sm border border-slate-200/50">
+            <a href="#" class="flex items-center group">
+                <span class="text-xl font-black tracking-tighter uppercase">
+                    MAU<span class="text-blue-500 transition-colors group-hover:text-emerald-500">GORRÍN</span>
+                </span>
+            </a>
+            
+            <div class="hidden md:flex items-center space-x-10">
+                <a href="#servicios" class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 hover:text-slate-900 transition-colors">Servicios</a>
+                <a href="#proceso" class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 hover:text-slate-900 transition-colors">Proceso</a>
+                <a href="#estrategia" class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 hover:text-slate-900 transition-colors">IA Lab</a>
+                <a href="#contacto" class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 hover:text-slate-900 transition-colors">Contacto</a>
+                <a href="https://calendly.com/maurogorrin55/30min-meeting-with-mauro" target="_blank" class="bg-slate-950 text-white px-8 py-3 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-blue-600 transition-all active:scale-95 shadow-lg shadow-blue-500/10">
+                    Trabajemos
+                </a>
+            </div>
 
-    <!-- Background Scripts only (App.tsx manages actual content) -->
-    <script>
-        lucide.createIcons();
-    </script>
+            <button id="mobile-menu-btn" class="md:hidden p-2 text-slate-900">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-64 pb-32 px-6 overflow-hidden">
+        <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-400/10 blur-[120px] rounded-full"></div>
+        <div class="absolute bottom-0 right-[-10%] w-[40%] h-[40%] bg-emerald-400/10 blur-[120px] rounded-full"></div>
+        
+        <div class="max-w-6xl mx-auto relative z-10 text-center">
+            <div class="inline-flex items-center space-x-2 bg-slate-950 text-white px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-[0.3em] mb-12 shadow-2xl">
+                <i data-lucide="sparkles" class="w-3 h-3 text-blue-400"></i>
+                <span>Estrategia de Crecimiento de Élite</span>
+            </div>
+            
+            <h1 class="text-[4rem] md:text-[8rem] font-black tracking-tighter text-slate-900 mb-12 leading-[0.8] flex flex-col items-center uppercase">
+                <span>Llevamos tu marca</span>
+                <span class="outline-text">al siguiente nivel</span>
+            </h1>
+            
+            <p class="text-slate-500 text-xl md:text-2xl max-w-4xl mx-auto mb-16 font-semibold leading-relaxed">
+                Estrategias de marketing digital de alto rendimiento. <br class="hidden md:block" />
+                No vendemos promesas, arquitectamos infraestructuras de facturación masiva.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+                <a href="#servicios" class="group w-full sm:w-auto bg-[#009688] hover:bg-slate-950 text-white px-12 py-6 rounded-3xl font-black flex items-center justify-center transition-all shadow-2xl shadow-emerald-500/20 text-lg uppercase tracking-wider">
+                    Nuestros Servicios <i data-lucide="arrow-right" class="ml-3 group-hover:translate-x-2 transition-transform w-6 h-6"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/maurogorrin/" target="_blank" class="w-full sm:w-auto bg-white border-2 border-slate-200 hover:border-slate-950 px-12 py-6 rounded-3xl font-black flex items-center justify-center transition-all text-lg uppercase tracking-wider">
+                    Conectar en LinkedIn
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Servicios (Rediseño con foco en Publicidad) -->
+    <section id="servicios" class="py-32 px-6 bg-slate-50/50">
+        <div class="max-w-7xl mx-auto">
+            <div class="mb-24 text-center md:text-left">
+                <h2 class="text-5xl md:text-[7rem] font-black mb-8 text-slate-900 leading-[0.9] uppercase tracking-tighter">
+                    Servicios que <br />
+                    <span class="gradient-text uppercase">generan resultados</span>
+                </h2>
+                <p class="text-slate-500 text-xl font-semibold max-w-2xl">Soluciones integrales diseñadas para dominar tu mercado.</p>
+            </div>
+
+            <!-- PROTAGONISTA: GESTIÓN DE PUBLICIDAD -->
+            <div class="mb-12 bg-slate-950 rounded-[4rem] p-10 md:p-20 text-white relative overflow-hidden bento-item border border-white/5 shadow-2xl">
+                <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-600/20 blur-[150px] -z-0"></div>
+                <div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                    <div>
+                        <div class="inline-flex items-center space-x-2 bg-blue-600 text-white px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest mb-10 shadow-lg shadow-blue-500/30">
+                            <i data-lucide="zap" class="w-3 h-3"></i>
+                            <span>Servicio de Alto Rendimiento</span>
+                        </div>
+                        <h3 class="text-5xl md:text-7xl font-black mb-8 uppercase leading-[0.85] tracking-tighter">
+                            Gestión de <br> <span class="text-blue-400">Publicidad Digital</span>
+                        </h3>
+                        <p class="text-slate-400 text-xl leading-relaxed mb-12 font-medium">
+                            No compramos clics, compramos rentabilidad. Desarrollamos campañas agresivas en Google, Meta y TikTok optimizadas para maximizar tu ROAS y escalar tu facturación de forma predecible.
+                        </p>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-12">
+                            <div class="space-y-4">
+                                <div class="flex items-center space-x-3 text-blue-400"><i data-lucide="check" class="w-5 h-5"></i> <span class="text-[10px] font-black uppercase tracking-widest">Google Ads (Search/Shopping)</span></div>
+                                <div class="flex items-center space-x-3 text-blue-400"><i data-lucide="check" class="w-5 h-5"></i> <span class="text-[10px] font-black uppercase tracking-widest">Meta Ads (Facebook/Instagram)</span></div>
+                            </div>
+                            <div class="space-y-4">
+                                <div class="flex items-center space-x-3 text-blue-400"><i data-lucide="check" class="w-5 h-5"></i> <span class="text-[10px] font-black uppercase tracking-widest">TikTok & LinkedIn Ads</span></div>
+                                <div class="flex items-center space-x-3 text-blue-400"><i data-lucide="check" class="w-5 h-5"></i> <span class="text-[10px] font-black uppercase tracking-widest">Optimización ROAS Avanzada</span></div>
+                            </div>
+                        </div>
+
+                        <a href="https://calendly.com/maurogorrin55/30min-meeting-with-mauro" target="_blank" class="inline-flex items-center bg-white text-slate-950 px-10 py-5 rounded-3xl font-black text-lg uppercase tracking-wider hover:bg-blue-400 hover:text-white transition-all shadow-2xl">
+                            Agendar Auditoría <i data-lucide="trending-up" class="ml-3 w-6 h-6"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="hidden lg:block relative">
+                        <div class="strategy-card border border-white/10 rounded-[3.5rem] p-10 shadow-2xl relative z-10">
+                            <div class="flex items-center justify-between mb-10">
+                                <span class="text-[10px] font-black uppercase tracking-widest text-slate-500">Live Ad-Performance</span>
+                                <div class="flex space-x-2">
+                                    <div class="w-3 h-3 rounded-full bg-red-500/50"></div>
+                                    <div class="w-3 h-3 rounded-full bg-yellow-500/50"></div>
+                                    <div class="w-3 h-3 rounded-full bg-green-500/50"></div>
+                                </div>
+                            </div>
+                            <div class="space-y-8">
+                                <div class="bg-white/5 p-8 rounded-3xl border border-white/5">
+                                    <div class="text-[10px] font-black uppercase text-slate-500 tracking-[0.3em] mb-2">Retorno de Inversión (ROAS)</div>
+                                    <div class="text-6xl font-black text-blue-400 tracking-tighter">8.42x</div>
+                                </div>
+                                <div class="grid grid-cols-2 gap-6">
+                                    <div class="bg-white/5 p-6 rounded-3xl border border-white/5">
+                                        <div class="text-[9px] font-black uppercase text-slate-500 tracking-widest mb-1">CPA Promedio</div>
+                                        <div class="text-3xl font-black text-emerald-400 tracking-tighter">$12.40</div>
+                                    </div>
+                                    <div class="bg-white/5 p-6 rounded-3xl border border-white/5">
+                                        <div class="text-[9px] font-black uppercase text-slate-500 tracking-widest mb-1">Conversiones</div>
+                                        <div class="text-3xl font-black text-white tracking-tighter">+1,240</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OTROS SERVICIOS: Bento Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                <!-- Estrategia -->
+                <div class="md:col-span-8 bento-item bg-white p-12 rounded-[3.5rem] border border-slate-100 flex flex-col justify-between">
+                    <div>
+                        <div class="w-16 h-16 rounded-2xl bg-blue-50 flex items-center justify-center mb-10 border border-blue-100">
+                            <i data-lucide="brain-circuit" class="text-blue-600 w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-3xl font-black mb-6 uppercase">Estrategia y Consultoría Digital</h3>
+                        <p class="text-slate-500 text-lg leading-relaxed mb-8 font-medium">
+                            Auditorías web, desarrollo de estrategias personalizadas y optimización de embudos para asegurar que cada parte de tu negocio esté lista para el crecimiento.
+                        </p>
+                    </div>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="px-5 py-2.5 bg-slate-100 rounded-full text-[10px] font-black text-slate-600 uppercase tracking-widest">Auditorías Web</span>
+                        <span class="px-5 py-2.5 bg-slate-100 rounded-full text-[10px] font-black text-slate-600 uppercase tracking-widest">Buyer Persona</span>
+                        <span class="px-5 py-2.5 bg-slate-100 rounded-full text-[10px] font-black text-slate-600 uppercase tracking-widest">Benchmarks</span>
+                    </div>
+                </div>
+
+                <!-- Automatización -->
+                <div class="md:col-span-4 bento-item bg-yellow-400 p-12 rounded-[3.5rem] flex flex-col justify-between border border-yellow-500/20">
+                    <div>
+                        <div class="w-16 h-16 rounded-2xl bg-black/10 flex items-center justify-center mb-10">
+                            <i data-lucide="zap" class="text-black w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-3xl font-black mb-4 uppercase leading-none">AI & Automation</h3>
+                        <p class="text-slate-950 leading-relaxed font-bold">
+                            Sincronización inteligente con Make, n8n y Manychat para ventas en piloto automático.
+                        </p>
+                    </div>
+                    <div class="text-[10px] font-black uppercase tracking-widest text-slate-900 border-t border-black/10 pt-6">WhatsApp & CRM Integrations</div>
+                </div>
+
+                <!-- Desarrollo Web -->
+                <div class="md:col-span-4 bento-item bg-indigo-600 p-12 rounded-[3.5rem] text-white flex flex-col justify-between">
+                    <div>
+                        <div class="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center mb-10">
+                            <i data-lucide="layout" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-3xl font-black mb-4 uppercase leading-none">Diseño & Web</h3>
+                        <p class="text-indigo-50 leading-relaxed font-semibold">
+                            Ecommerce y landings optimizadas para la conversión más agresiva.
+                        </p>
+                    </div>
+                    <div class="flex gap-2 self-end">
+                        <div class="w-12 h-1.5 rounded-full bg-white"></div>
+                        <div class="w-6 h-1.5 rounded-full bg-white/30"></div>
+                    </div>
+                </div>
+
+                <!-- Audiovisual -->
+                <div class="md:col-span-8 bento-item bg-white p-12 rounded-[3.5rem] border border-slate-100 flex flex-col md:flex-row items-center gap-10">
+                    <div class="flex-grow">
+                        <div class="w-16 h-16 rounded-2xl bg-red-50 flex items-center justify-center mb-8">
+                            <i data-lucide="video" class="text-red-600 w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-3xl font-black mb-4 uppercase">Producción Audiovisual</h3>
+                        <p class="text-slate-500 text-lg leading-relaxed font-semibold max-w-sm">
+                            Creatividades impactantes diseñadas específicamente para frenar el scroll y generar ventas.
+                        </p>
+                    </div>
+                    <div class="w-full md:w-64 h-48 bg-slate-950 rounded-[3rem] flex items-center justify-center text-white/20 font-black text-xs uppercase tracking-widest border border-white/5">
+                        Creative Lab
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nuestro Proceso -->
+    <section id="proceso" class="py-32 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-24">
+                <h2 class="text-5xl md:text-[7rem] font-black mb-8 text-slate-900 leading-[0.9] uppercase tracking-tighter">
+                    Nuestro <br />
+                    <span class="outline-text">Proceso de Trabajo</span>
+                </h2>
+                <p class="text-slate-500 text-xl font-semibold uppercase tracking-widest">Metodología ágil enfocada en ROI</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="p-10 rounded-[3.5rem] bg-slate-50 border border-slate-100 bento-item relative group">
+                    <div class="text-8xl font-black text-slate-200 absolute top-4 right-8 opacity-40 group-hover:opacity-10 transition-opacity leading-none">01</div>
+                    <div class="w-16 h-16 rounded-2xl bg-white flex items-center justify-center mb-10 shadow-sm relative z-10"><i data-lucide="compass" class="text-blue-500 w-8 h-8"></i></div>
+                    <h3 class="text-2xl font-black mb-6 uppercase tracking-tight relative z-10">Auditoría</h3>
+                    <p class="text-slate-500 text-sm font-semibold leading-relaxed relative z-10">Inmersión total. Auditamos tu ecosistema actual y analizamos a tu competencia.</p>
+                </div>
+                <div class="p-10 rounded-[3.5rem] bg-slate-50 border border-slate-100 bento-item relative group">
+                    <div class="text-8xl font-black text-slate-200 absolute top-4 right-8 opacity-40 group-hover:opacity-10 transition-opacity leading-none">02</div>
+                    <div class="w-16 h-16 rounded-2xl bg-white flex items-center justify-center mb-10 shadow-sm relative z-10"><i data-lucide="layers" class="text-emerald-500 w-8 h-8"></i></div>
+                    <h3 class="text-2xl font-black mb-6 uppercase tracking-tight relative z-10">Arquitectura</h3>
+                    <p class="text-slate-500 text-sm font-semibold leading-relaxed relative z-10">Diseñamos el funnel. Seleccionamos canales con mayor ROI y definimos la oferta.</p>
+                </div>
+                <div class="p-10 rounded-[3.5rem] bg-slate-50 border border-slate-100 bento-item relative group">
+                    <div class="text-8xl font-black text-slate-200 absolute top-4 right-8 opacity-40 group-hover:opacity-10 transition-opacity leading-none">03</div>
+                    <div class="w-16 h-16 rounded-2xl bg-white flex items-center justify-center mb-10 shadow-sm relative z-10"><i data-lucide="rocket" class="text-indigo-500 w-8 h-8"></i></div>
+                    <h3 class="text-2xl font-black mb-6 uppercase tracking-tight relative z-10">Ejecución</h3>
+                    <p class="text-slate-500 text-sm font-semibold leading-relaxed relative z-10">Configuración técnica de élite y lanzamiento con rastreo de conversiones avanzado.</p>
+                </div>
+                <div class="p-10 rounded-[3.5rem] bg-slate-50 border border-slate-100 bento-item relative group">
+                    <div class="text-8xl font-black text-slate-200 absolute top-4 right-8 opacity-40 group-hover:opacity-10 transition-opacity leading-none">04</div>
+                    <div class="w-16 h-16 rounded-2xl bg-white flex items-center justify-center mb-10 shadow-sm relative z-10"><i data-lucide="activity" class="text-orange-500 w-8 h-8"></i></div>
+                    <h3 class="text-2xl font-black mb-6 uppercase tracking-tight relative z-10">Optimización</h3>
+                    <p class="text-slate-500 text-sm font-semibold leading-relaxed relative z-10">Ajustamos pujas y creatividades a diario para bajar tu CPA y escalar lo rentable.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- IA Strategy Lab (Nexus Engine) -->
+    <section id="estrategia" class="py-32 px-6 bg-slate-950 text-white relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.1),transparent)]"></div>
+        <div class="max-w-4xl mx-auto relative z-10">
+            <div class="text-center mb-16">
+                <div class="inline-flex items-center space-x-2 bg-blue-500/10 border border-blue-500/20 px-4 py-1.5 rounded-full text-blue-400 text-[10px] font-black uppercase tracking-[0.2em] mb-8">
+                    <i data-lucide="brain-circuit" class="w-4 h-4"></i>
+                    <span>Nexus AI Engine v2.5</span>
+                </div>
+                <h2 class="text-5xl md:text-7xl font-black mb-6 tracking-tighter uppercase leading-none">AI Strategy <span class="text-blue-500">Room</span></h2>
+                <p class="text-slate-400 text-lg font-medium">Ingresa tus datos y deja que nuestra IA arquitecte tu roadmap de crecimiento en segundos.</p>
+            </div>
+
+            <div class="strategy-card border border-white/10 rounded-[3rem] p-8 md:p-12 shadow-2xl">
+                <form id="ai-form" class="space-y-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="space-y-3">
+                            <label class="text-[10px] font-black uppercase tracking-widest text-slate-500">Tu Industria</label>
+                            <input type="text" id="industry" placeholder="ej. SaaS, E-commerce, Moda" required 
+                                class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all font-semibold">
+                        </div>
+                        <div class="space-y-3">
+                            <label class="text-[10px] font-black uppercase tracking-widest text-slate-500">Objetivo Principal</label>
+                            <input type="text" id="goals" placeholder="ej. Duplicar leads, ROAS +5x" required 
+                                class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all font-semibold">
+                        </div>
+                    </div>
+                    <button type="submit" id="generate-btn" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-black py-6 rounded-2xl flex items-center justify-center space-x-3 transition-all active:scale-95 shadow-xl shadow-blue-500/20 uppercase tracking-widest">
+                        <i data-lucide="sparkles" class="w-5 h-5"></i>
+                        <span>Generar Estrategia Maestra</span>
+                    </button>
+                </form>
+
+                <!-- Resultado de la IA -->
+                <div id="ai-result" class="hidden mt-12 space-y-10 animate-in fade-in duration-700">
+                    <div class="h-px bg-white/10 w-full"></div>
+                    <div id="ai-overview">
+                        <h4 class="text-blue-400 font-black uppercase text-[10px] tracking-[0.3em] mb-4">Visión Estratégica</h4>
+                        <p class="text-xl text-slate-200 font-medium leading-relaxed" id="result-overview"></p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="result-steps">
+                        <!-- Pasos generados aquí -->
+                    </div>
+                    <div class="bg-blue-600/10 p-8 rounded-3xl border border-blue-500/20" id="result-tips">
+                        <h4 class="text-blue-400 font-black mb-6 flex items-center uppercase text-[10px] tracking-widest">
+                            <i data-lucide="award" class="w-4 h-4 mr-2"></i> Tips de Crecimiento Acelerado
+                        </h4>
+                        <ul class="space-y-4 text-slate-300 font-medium" id="tips-list"></ul>
+                    </div>
+                </div>
+
+                <div id="ai-loading" class="hidden flex flex-col items-center justify-center py-20 space-y-4">
+                    <div class="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                    <p class="text-slate-500 font-black uppercase text-[10px] tracking-widest">Nexus está procesando data del mercado...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certificaciones -->
+    <section class="py-32 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-24">
+                <h2 class="text-5xl md:text-8xl font-black mb-8 leading-none uppercase tracking-tighter">
+                    Certificaciones <br />
+                    <span class="outline-text">de Élite</span>
+                </h2>
+                <p class="text-slate-500 text-lg font-bold uppercase tracking-widest">Respaldados por los gigantes globales</p>
+            </div>
+
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="p-10 rounded-[3rem] bg-slate-50 border border-slate-100 flex flex-col items-center text-center bento-item group">
+                    <img src="https://www.gstatic.com/images/branding/product/2x/google_ads_96dp.png" alt="Google" class="w-16 h-16 object-contain mb-8 group-hover:scale-110 transition-transform">
+                    <h4 class="text-xl font-black mb-2 uppercase">Google Ads</h4>
+                    <p class="text-slate-500 text-[10px] font-bold uppercase">Certified Partner</p>
+                </div>
+                <div class="p-10 rounded-[3rem] bg-slate-50 border border-slate-100 flex flex-col items-center text-center bento-item group">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Meta_Platforms_Inc._logo.svg" alt="Meta" class="w-16 h-16 object-contain mb-8 group-hover:scale-110 transition-transform">
+                    <h4 class="text-xl font-black mb-2 uppercase">Meta Ads</h4>
+                    <p class="text-slate-500 text-[10px] font-bold uppercase">Business Partner</p>
+                </div>
+                <div class="p-10 rounded-[3rem] bg-slate-50 border border-slate-100 flex flex-col items-center text-center bento-item group">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/a/a9/TikTok_logo.svg" alt="TikTok" class="w-16 h-16 object-contain mb-8 group-hover:scale-110 transition-transform">
+                    <h4 class="text-xl font-black mb-2 uppercase">TikTok Ads</h4>
+                    <p class="text-slate-500 text-[10px] font-bold uppercase">Ad Specialist</p>
+                </div>
+                <div class="p-10 rounded-[3rem] bg-slate-50 border border-slate-100 flex flex-col items-center text-center bento-item group">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="LinkedIn" class="w-16 h-16 object-contain mb-8 group-hover:scale-110 transition-transform">
+                    <h4 class="text-xl font-black mb-2 uppercase">LinkedIn Ads</h4>
+                    <p class="text-slate-500 text-[10px] font-bold uppercase">B2B Certified</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQs -->
+    <section id="faq" class="py-32 px-6 bg-slate-50">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-24">
+                <h2 class="text-6xl md:text-[8rem] font-black mb-8 leading-[0.8] uppercase tracking-tighter">Transparencia <br> Total</h2>
+                <p class="text-slate-500 text-xl font-semibold uppercase tracking-widest">Respuestas directas</p>
+            </div>
+            
+            <div class="bg-white rounded-[4rem] p-10 md:p-16 shadow-sm border border-slate-100 space-y-4">
+                <div class="faq-item active border-b border-slate-100 last:border-0 overflow-hidden">
+                    <button class="faq-trigger w-full py-10 flex items-center justify-between text-left group transition-all">
+                        <span class="text-2xl font-black text-slate-900 group-hover:text-blue-600">¿En cuánto tiempo veré resultados?</span>
+                        <div class="faq-icon flex-shrink-0 ml-6 w-14 h-14 rounded-full border-2 border-slate-200 flex items-center justify-center transition-all">
+                            <i data-lucide="plus" class="w-6 h-6"></i>
+                        </div>
+                    </button>
+                    <div class="faq-content">
+                        <p class="text-slate-500 text-xl leading-relaxed pb-12 font-semibold max-w-2xl">Con Publicidad Digital (Ads), generamos tráfico y leads desde la primera semana. Para SEO, los resultados sólidos suelen consolidarse entre 3 y 6 meses.</p>
+                    </div>
+                </div>
+                <div class="faq-item border-b border-slate-100 last:border-0 overflow-hidden">
+                    <button class="faq-trigger w-full py-10 flex items-center justify-between text-left group transition-all">
+                        <span class="text-2xl font-black text-slate-900 group-hover:text-blue-600">¿Cuál es la inversión mínima?</span>
+                        <div class="faq-icon flex-shrink-0 ml-6 w-14 h-14 rounded-full border-2 border-slate-200 flex items-center justify-center transition-all">
+                            <i data-lucide="plus" class="w-6 h-6"></i>
+                        </div>
+                    </button>
+                    <div class="faq-content">
+                        <p class="text-slate-500 text-xl leading-relaxed pb-12 font-semibold max-w-2xl">No hay un mínimo estricto, pero recomendamos presupuestos que permitan obtener datos significativos para optimizar y escalar con rentabilidad real.</p>
+                    </div>
+                </div>
+                <div class="faq-item border-b border-slate-100 last:border-0 overflow-hidden">
+                    <button class="faq-trigger w-full py-10 flex items-center justify-between text-left group transition-all">
+                        <span class="text-2xl font-black text-slate-900 group-hover:text-blue-600">¿Cómo miden el éxito?</span>
+                        <div class="faq-icon flex-shrink-0 ml-6 w-14 h-14 rounded-full border-2 border-slate-200 flex items-center justify-center transition-all">
+                            <i data-lucide="plus" class="w-6 h-6"></i>
+                        </div>
+                    </button>
+                    <div class="faq-content">
+                        <p class="text-slate-500 text-xl leading-relaxed pb-12 font-semibold max-w-2xl">Nos enfocamos en KPIs de negocio: ROAS (Retorno de Inversión), CPA (Costo por Adquisición) y LTV (Valor de vida del cliente).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section id="contacto" class="py-64 px-6 relative bg-white overflow-hidden text-center">
+        <div class="max-w-5xl mx-auto relative z-10">
+            <h2 class="text-[5rem] md:text-[10rem] font-black tracking-tighter text-slate-900 mb-20 leading-[0.8] uppercase">
+                ¿Escalamos <br /> <span class="gradient-text uppercase">juntos?</span>
+            </h2>
+            <div class="flex justify-center">
+                <a href="https://calendly.com/maurogorrin55/30min-meeting-with-mauro" target="_blank" class="group bg-slate-950 hover:bg-blue-600 text-white px-16 py-8 rounded-[3rem] font-black text-2xl uppercase tracking-widest transition-all shadow-3xl active:scale-95 flex items-center">
+                    Agendar Auditoría Gratuita <i data-lucide="arrow-right" class="ml-4 w-8 h-8 group-hover:translate-x-3 transition-transform"></i>
+                </a>
+            </div>
+            <p class="mt-16 text-slate-400 font-black uppercase tracking-[0.5em] text-xs">Cupos limitados por mes para garantizar calidad</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 py-20 px-6 border-t border-white/5">
+        <div class="max-w-7xl mx-auto flex flex-col items-center">
+            <div class="text-white text-3xl font-black tracking-tighter mb-8 uppercase">
+                MAU<span class="text-blue-500">GORRÍN</span>
+            </div>
+            <div class="text-slate-700 text-[10px] font-black uppercase tracking-widest">
+                © 2024 Mauro Gorrín Strategy Lab. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="module" src="index.tsx"></script>
 </body>
 </html>
