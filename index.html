@@ -64,39 +64,11 @@
             transform: translateY(-10px) scale(1.01);
             box-shadow: 0 40px 80px -15px rgba(0, 0, 0, 0.08);
         }
-        
-        /* Animación de Acordeón FAQ mediante Grid (Técnica moderna) */
-        .faq-answer-wrapper {
-            display: grid;
-            grid-template-rows: 0fr;
-            transition: grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .faq-item.active .faq-answer-wrapper {
-            grid-template-rows: 1fr;
-        }
-        .faq-answer-content {
-            overflow: hidden;
-        }
-        .faq-item.active .faq-icon {
-            transform: rotate(45deg);
-            background-color: #ef4444;
-            color: white;
-            border-color: #ef4444;
-        }
-        .faq-item.active {
-            background-color: #f8fafc;
-        }
 
         .strategy-card {
             background: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(10px);
         }
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0px); }
-        }
-        .float-anim { animation: float 6s ease-in-out infinite; }
         
         /* Menú Móvil */
         #mobile-menu {
@@ -259,7 +231,7 @@
                 </div>
             </div>
 
-            <!-- OTROS SERVICIOS BENTO GRID -->
+            <!-- OTROS SERVICIOS -->
             <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
                 <div class="md:col-span-8 bento-item bg-white p-12 rounded-[3.5rem] border border-slate-100 flex flex-col justify-between">
                     <div>
@@ -362,84 +334,58 @@
         </div>
     </section>
 
-    <!-- FAQs Sección Mejorada -->
+    <!-- FAQs Sección Rediseñada (Estilo Tarjetas) -->
     <section id="faq" class="py-32 px-6 bg-slate-50">
-        <div class="max-w-4xl mx-auto">
+        <div class="max-w-7xl mx-auto">
             <div class="text-center mb-24">
                 <h2 class="text-6xl md:text-[8rem] font-black mb-8 leading-[0.8] uppercase tracking-tighter">Transparencia <br> Total</h2>
                 <p class="text-slate-500 text-xl font-semibold uppercase tracking-widest">Resolvemos tus dudas antes de empezar</p>
             </div>
             
-            <div class="bg-white rounded-[4rem] p-4 md:p-12 shadow-sm border border-slate-100 space-y-4">
-                
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <!-- FAQ Item 1 -->
-                <div class="faq-item active border border-slate-100 rounded-[2.5rem] p-6 transition-all duration-300">
-                    <button class="faq-trigger w-full flex items-center justify-between text-left group">
-                        <span class="text-xl md:text-2xl font-black text-slate-900 group-hover:text-blue-600 transition-colors">¿En cuánto tiempo veré resultados reales?</span>
-                        <div class="faq-icon flex-shrink-0 ml-4 w-12 h-12 rounded-full border-2 border-slate-200 flex items-center justify-center transition-all bg-white text-slate-400 group-hover:border-blue-500 group-hover:text-blue-500">
-                            <i data-lucide="plus" class="w-6 h-6"></i>
-                        </div>
-                    </button>
-                    <div class="faq-answer-wrapper">
-                        <div class="faq-answer-content">
-                            <p class="text-slate-500 text-lg md:text-xl leading-relaxed font-semibold pt-6 max-w-2xl">
-                                Con Publicidad Digital (Paid Media), empezamos a generar tráfico y leads desde la primera semana. Para estrategias de SEO, los resultados sólidos suelen consolidarse entre los 3 y 6 meses.
-                            </p>
-                        </div>
+                <div class="p-10 rounded-[3.5rem] bg-white border border-slate-100 bento-item group">
+                    <div class="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center mb-8">
+                        <i data-lucide="timer" class="text-blue-500 w-7 h-7"></i>
                     </div>
+                    <h3 class="text-2xl font-black mb-6 uppercase tracking-tight text-slate-900">¿En cuánto tiempo veré resultados reales?</h3>
+                    <p class="text-slate-500 text-lg leading-relaxed font-semibold">
+                        Con Publicidad Digital (Paid Media), empezamos a generar tráfico y leads desde la primera semana. Para estrategias de SEO, los resultados sólidos suelen consolidarse entre los 3 y 6 meses.
+                    </p>
                 </div>
 
                 <!-- FAQ Item 2 -->
-                <div class="faq-item border border-slate-100 rounded-[2.5rem] p-6 transition-all duration-300">
-                    <button class="faq-trigger w-full flex items-center justify-between text-left group">
-                        <span class="text-xl md:text-2xl font-black text-slate-900 group-hover:text-blue-600 transition-colors">¿Cuál es la inversión mínima recomendada?</span>
-                        <div class="faq-icon flex-shrink-0 ml-4 w-12 h-12 rounded-full border-2 border-slate-200 flex items-center justify-center transition-all bg-white text-slate-400 group-hover:border-blue-500 group-hover:text-blue-500">
-                            <i data-lucide="plus" class="w-6 h-6"></i>
-                        </div>
-                    </button>
-                    <div class="faq-answer-wrapper">
-                        <div class="faq-answer-content">
-                            <p class="text-slate-500 text-lg md:text-xl leading-relaxed font-semibold pt-6 max-w-2xl">
-                                No hay un mínimo estricto, pero recomendamos presupuestos que permitan obtener datos estadísticamente significativos. El objetivo siempre es que la inversión se pague sola mediante el retorno generado.
-                            </p>
-                        </div>
+                <div class="p-10 rounded-[3.5rem] bg-white border border-slate-100 bento-item group">
+                    <div class="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center mb-8">
+                        <i data-lucide="banknote" class="text-emerald-500 w-7 h-7"></i>
                     </div>
+                    <h3 class="text-2xl font-black mb-6 uppercase tracking-tight text-slate-900">¿Cuál es la inversión mínima recomendada?</h3>
+                    <p class="text-slate-500 text-lg leading-relaxed font-semibold">
+                        No hay un mínimo estricto, pero recomendamos presupuestos que permitan obtener datos estadísticamente significativos. El objetivo siempre es que la inversión se pague sola mediante el retorno generado.
+                    </p>
                 </div>
 
                 <!-- FAQ Item 3 -->
-                <div class="faq-item border border-slate-100 rounded-[2.5rem] p-6 transition-all duration-300">
-                    <button class="faq-trigger w-full flex items-center justify-between text-left group">
-                        <span class="text-xl md:text-2xl font-black text-slate-900 group-hover:text-blue-600 transition-colors">¿Cómo medimos el éxito de las campañas?</span>
-                        <div class="faq-icon flex-shrink-0 ml-4 w-12 h-12 rounded-full border-2 border-slate-200 flex items-center justify-center transition-all bg-white text-slate-400 group-hover:border-blue-500 group-hover:text-blue-500">
-                            <i data-lucide="plus" class="w-6 h-6"></i>
-                        </div>
-                    </button>
-                    <div class="faq-answer-wrapper">
-                        <div class="faq-answer-content">
-                            <p class="text-slate-500 text-lg md:text-xl leading-relaxed font-semibold pt-6 max-w-2xl">
-                                Nos enfocamos en KPIs de negocio: ROAS (Retorno Publicitario), CPA (Costo por Adquisición) y LTV (Valor de vida del cliente). Recibirás reportes en tiempo real de estas métricas.
-                            </p>
-                        </div>
+                <div class="p-10 rounded-[3.5rem] bg-white border border-slate-100 bento-item group">
+                    <div class="w-14 h-14 rounded-2xl bg-indigo-50 flex items-center justify-center mb-8">
+                        <i data-lucide="bar-chart-3" class="text-indigo-500 w-7 h-7"></i>
                     </div>
+                    <h3 class="text-2xl font-black mb-6 uppercase tracking-tight text-slate-900">¿Cómo medimos el éxito de las campañas?</h3>
+                    <p class="text-slate-500 text-lg leading-relaxed font-semibold">
+                        Nos enfocamos en KPIs de negocio: ROAS (Retorno Publicitario), CPA (Costo por Adquisición) y LTV (Valor de vida del cliente). Recibirás reportes en tiempo real de estas métricas clave.
+                    </p>
                 </div>
 
                 <!-- FAQ Item 4 -->
-                <div class="faq-item border border-slate-100 rounded-[2.5rem] p-6 transition-all duration-300">
-                    <button class="faq-trigger w-full flex items-center justify-between text-left group">
-                        <span class="text-xl md:text-2xl font-black text-slate-900 group-hover:text-blue-600 transition-colors">¿Necesito un contrato de permanencia?</span>
-                        <div class="faq-icon flex-shrink-0 ml-4 w-12 h-12 rounded-full border-2 border-slate-200 flex items-center justify-center transition-all bg-white text-slate-400 group-hover:border-blue-500 group-hover:text-blue-500">
-                            <i data-lucide="plus" class="w-6 h-6"></i>
-                        </div>
-                    </button>
-                    <div class="faq-answer-wrapper">
-                        <div class="faq-answer-content">
-                            <p class="text-slate-500 text-lg md:text-xl leading-relaxed font-semibold pt-6 max-w-2xl">
-                                Creemos en los resultados, no en las ataduras. Ofrecemos contratos flexibles porque sabemos que una vez veas el retorno de inversión, querrás seguir escalando con nosotros.
-                            </p>
-                        </div>
+                <div class="p-10 rounded-[3.5rem] bg-white border border-slate-100 bento-item group">
+                    <div class="w-14 h-14 rounded-2xl bg-orange-50 flex items-center justify-center mb-8">
+                        <i data-lucide="shield-check" class="text-orange-500 w-7 h-7"></i>
                     </div>
+                    <h3 class="text-2xl font-black mb-6 uppercase tracking-tight text-slate-900">¿Necesito un contrato de permanencia?</h3>
+                    <p class="text-slate-500 text-lg leading-relaxed font-semibold">
+                        Creemos en los resultados, no en las ataduras. Ofrecemos contratos flexibles porque sabemos que una vez veas el retorno de inversión, querrás seguir escalando con nosotros.
+                    </p>
                 </div>
-
             </div>
         </div>
     </section>

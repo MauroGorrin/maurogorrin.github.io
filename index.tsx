@@ -3,29 +3,6 @@
 declare var lucide: any;
 lucide.createIcons();
 
-// Lógica de FAQ (Acordeón mejorado y robusto)
-const faqItems = document.querySelectorAll('.faq-item');
-faqItems.forEach(item => {
-    const trigger = item.querySelector('.faq-trigger');
-    trigger?.addEventListener('click', () => {
-        const isActive = item.classList.contains('active');
-        
-        // Cerrar todos los demás para un efecto de acordeón puro
-        faqItems.forEach(otherItem => {
-            if (otherItem !== item) {
-                otherItem.classList.remove('active');
-            }
-        });
-
-        // Alternar el estado actual
-        if (isActive) {
-            item.classList.remove('active');
-        } else {
-            item.classList.add('active');
-        }
-    });
-});
-
 // Lógica de Navegación (Header dinámico al hacer scroll)
 const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
