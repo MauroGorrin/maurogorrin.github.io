@@ -1,21 +1,5 @@
 
-// Definición de tipo para Lucide disponible en window
-declare var lucide: any;
-
 const initApp = () => {
-    // Función para inicializar iconos con reintentos para asegurar carga del CDN
-    const loadIcons = () => {
-        if (typeof lucide !== 'undefined') {
-            lucide.createIcons();
-            console.log('Lucide icons initialized');
-        } else {
-            console.log('Lucide not found, retrying...');
-            setTimeout(loadIcons, 100);
-        }
-    };
-
-    loadIcons();
-
     // Lógica de Navegación (Header dinámico al hacer scroll)
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
@@ -58,10 +42,3 @@ if (document.readyState === 'loading') {
 } else {
     initApp();
 }
-
-// Re-ejecutar creación de iconos tras un breve delay extra para robustez
-setTimeout(() => {
-    if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-    }
-}, 1000);
