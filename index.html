@@ -1,509 +1,70 @@
 
-import React, { useState } from 'react';
-import { 
-  ArrowRight, 
-  Target, 
-  Megaphone, 
-  Layout, 
-  Share2, 
-  Search, 
-  Bot, 
-  Video, 
-  Zap, 
-  CheckCircle2, 
-  PenTool,
-  BarChart4,
-  Mail,
-  PieChart,
-  Linkedin,
-  Plus,
-  Minus,
-  Sparkles,
-  ShieldCheck,
-  TrendingUp,
-  Award,
-  Users,
-  BarChart3,
-  Rocket
-} from 'lucide-react';
-import { Link } from 'react-router-dom';
-
-const CALENDLY_LINK = "https://calendly.com/maurogorrin55/30min-meeting-with-mauro";
-
-const FAQ_DATA = [
-  {
-    question: "¿En cuánto tiempo veré resultados en mis campañas?",
-    answer: "Los tiempos varían según el canal. Con Publicidad Digital (Ads), podemos generar tráfico y prospectos desde la primera semana. Para SEO y posicionamiento orgánico, los resultados sólidos suelen consolidarse entre los 3 y 6 meses, ya que requieren construir autoridad y optimización técnica."
-  },
-  {
-    question: "¿Cuál es la inversión mínima recomendada para publicidad?",
-    answer: "No hay un mínimo estricto, pero recomendamos un presupuesto que permita obtener datos suficientes para optimizar. Dependiendo de tu industria y objetivos, sugerimos empezar con montos que permitan testear creatividades y audiencias de forma efectiva."
-  },
-  {
-    question: "¿Cómo recibiré los reportes de resultados?",
-    answer: "Transparencia total. Te entregamos dashboards en tiempo real donde puedes ver tus métricas las 24 horas del día. Además, realizamos reuniones mensuales de seguimiento para analizar el rendimiento y ajustar la estrategia juntos."
-  },
-  {
-    question: "¿Qué tecnologías usan para las automatizaciones?",
-    answer: "Somos expertos en el stack moderno de automatización. Utilizamos herramientas líderes como Make (Integromat), n8n, ManyChat para WhatsApp/Instagram y Zapier para conectar tu CRM con el resto de tu operación de marketing."
-  },
-  {
-    question: "¿Trabajan con empresas de cualquier industria?",
-    answer: "Aunque tenemos mucha experiencia en Retail, SaaS y Servicios Profesionales, nuestra metodología basada en datos se adapta a casi cualquier sector que busque escalar su adquisición de clientes en línea de manera rentable."
-  },
-  {
-    question: "¿Es obligatorio firmar un contrato de permanencia larga?",
-    answer: "Creemos en los resultados, no en las ataduras. Trabajamos con acuerdos mensuales flexibles, aunque siempre recomendamos una visión a mediano y largo plazo para maximizar el retorno de tu inversión."
-  },
-  {
-    question: "¿Qué diferencia a su servicio de SEO de otras agencias?",
-    answer: "Nos enfocamos en el SEO Semántico y de Intención. No solo buscamos 'palabras clave' al azar, sino que optimizamos para que el usuario que llegue a tu web sea un cliente potencial real, mejorando la autoridad técnica y la experiencia de usuario."
-  },
-  {
-    question: "¿Cómo miden el éxito de una estrategia?",
-    answer: "Nos alejamos de las 'métricas de vanidad' como simples likes. Medimos el éxito basándonos en el ROI (Retorno de Inversión), el costo por adquisición (CPA) y la calidad real de los leads generados para tu equipo de ventas."
-  },
-  {
-    question: "¿Ofrecen servicios de diseño y desarrollo de sitios web?",
-    answer: "Sí, creamos sitios web de alto rendimiento, landing pages y tiendas en línea (ecommerce) totalmente optimizadas para la conversión. Todo lo que diseñamos tiene un enfoque estratégico para vender, no solo para verse bonito."
-  },
-  {
-    question: "¿Cuál es el proceso para comenzar a trabajar?",
-    answer: "El primer paso es una sesión de diagnóstico gratuita donde analizamos tu situación actual. Si vemos que podemos aportar valor real, diseñamos una propuesta personalizada y una hoja de ruta de ejecución para los primeros 90 días."
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agencia de Marketing Digital | MauGorrín</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            background-color: #ffffff;
+            color: #1a1a1a;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            letter-spacing: -0.02em;
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #3b82f6 0%, #10b981 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .btn-gradient {
+            background: linear-gradient(90deg, #059669 0%, #10b981 100%);
+        }
+        .service-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.05);
+        }
+        .process-arrow::after {
+            content: '→';
+            position: absolute;
+            right: -2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #3b82f6;
+            font-size: 1.5rem;
+        }
+        @media (max-width: 768px) {
+            .process-arrow::after { display: none; }
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.34.0",
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
+    "react-router-dom": "https://esm.sh/react-router-dom@^7.11.0",
+    "recharts": "https://esm.sh/recharts@^3.6.0"
   }
-];
-
-const FAQItem: React.FC<{ question: string; answer: string; isOpen: boolean; onClick: () => void }> = ({ question, answer, isOpen, onClick }) => (
-  <div className="border-b border-slate-100 last:border-0">
-    <button 
-      onClick={onClick}
-      className="w-full py-6 flex items-center justify-between text-left hover:bg-slate-50/50 transition-colors px-4 rounded-xl group"
-    >
-      <span className={`text-lg font-bold transition-colors ${isOpen ? 'text-[#3b82f6]' : 'text-[#111827]'}`}>
-        {question}
-      </span>
-      <div className={`flex-shrink-0 ml-4 w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center transition-all ${isOpen ? 'bg-[#3b82f6] border-[#3b82f6] text-white rotate-180' : 'text-slate-400 group-hover:border-slate-300'}`}>
-        {isOpen ? <Minus size={16} /> : <Plus size={16} />}
-      </div>
-    </button>
-    <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-96 pb-6' : 'max-h-0'}`}>
-      <p className="text-slate-500 leading-relaxed px-4 font-medium">
-        {answer}
-      </p>
-    </div>
-  </div>
-);
-
-const Home: React.FC = () => {
-  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
-
-  return (
-    <div className="bg-white">
-      {/* Hero Section */}
-      <section className="pt-44 pb-24 px-6 overflow-hidden">
-        <div className="max-w-5xl mx-auto text-center">
-          <div className="inline-flex items-center space-x-2 bg-blue-50 border border-blue-100 px-4 py-1.5 rounded-full text-[#3b82f6] text-xs font-bold mb-8 uppercase tracking-wider">
-            <Zap size={14} className="fill-current" />
-            <span>Agencia de Marketing Digital</span>
-          </div>
-          
-          <h1 className="text-[3.5rem] md:text-[5.5rem] font-extrabold tracking-tight text-[#111827] mb-8 leading-[1.05]">
-            Llevamos tu marca <br />
-            <span className="gradient-text">al siguiente nivel</span>
-          </h1>
-          
-          <p className="text-slate-500 text-lg md:text-xl max-w-3xl mx-auto mb-12 font-medium leading-relaxed">
-            Estrategias de marketing digital que generan resultados reales.<br />
-            Diseño, tecnología y automatización inteligente.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
-            <a 
-              href={CALENDLY_LINK}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full sm:w-auto bg-[#009688] hover:bg-[#00796b] text-white px-10 py-4 rounded-full font-bold flex items-center justify-center transition-all shadow-lg shadow-emerald-500/20"
-            >
-              Trabajemos Juntos <ArrowRight className="ml-2" size={20} />
-            </a>
-            <button className="w-full sm:w-auto bg-white border border-slate-200 hover:bg-slate-50 text-slate-800 px-10 py-4 rounded-full font-bold flex items-center justify-center transition-all">
-              Conectar en LinkedIn <Linkedin className="ml-2 text-blue-600" size={20} />
-            </button>
-          </div>
-
-          {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto border-t border-slate-100 pt-16">
-            <StatItem number="100+" label="Proyectos Completados" />
-            <StatItem number="50+" label="Clientes Activos" />
-            <StatItem number="300%" label="ROI Promedio" />
-            <StatItem number="24/7" label="Soporte Disponible" />
-          </div>
-        </div>
-      </section>
-
-      {/* Services Grid */}
-      <section className="py-24 px-6 bg-[#f8fafc]">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-extrabold mb-4 text-[#111827]">
-              Servicios que <br />
-              <span className="gradient-text">generan resultados</span>
-            </h2>
-            <p className="text-slate-500 text-lg font-medium">Soluciones integrales de marketing digital para hacer crecer tu negocio</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <ServiceCard 
-              icon={<Target className="text-blue-500" />}
-              title="Estrategia y Consultoría Digital"
-              desc="Auditorías web completas, desarrollo de estrategias personalizadas, análisis de competencia y optimización de embudos de conversión."
-              features={["Auditorías web", "Buyer persona", "Análisis de competencia"]}
-              bgColor="bg-blue-50"
-            />
-            <ServiceCard 
-              icon={<Megaphone className="text-sky-400" />}
-              title="Gestión de Publicidad Digital"
-              desc="Campañas rentables en Google Ads, Meta Ads, TikTok, LinkedIn y más. Seguimiento avanzado y optimización continua."
-              features={["Google Ads", "Meta Ads", "TikTok Ads"]}
-              bgColor="bg-sky-50"
-            />
-             <ServiceCard 
-              icon={<Layout className="text-blue-600" />}
-              title="Diseño y Desarrollo Web"
-              desc="Sitios web profesionales, ecommerce y landing pages optimizadas para conversión y experiencia de usuario."
-              features={["Sitios web y ecommerce", "Landing pages", "Optimización técnica"]}
-              bgColor="bg-indigo-50"
-            />
-            <ServiceCard 
-              icon={<PenTool className="text-blue-400" />}
-              title="Branding e Identidad Corporativa"
-              desc="Construimos marcas memorables con identidad visual, storytelling y posicionamiento estratégico."
-              features={["Diagnóstico", "Identidad visual", "Manual de marca"]}
-              bgColor="bg-slate-50"
-            />
-            <ServiceCard 
-              icon={<Share2 className="text-rose-400" />}
-              title="Gestión de Redes Sociales"
-              desc="Estrategia, contenido y gestión de comunidades en todas las plataformas sociales relevantes."
-              features={["Instagram, FB, TikTok", "Calendario de contenidos", "Community management"]}
-              bgColor="bg-rose-50"
-            />
-            <ServiceCard 
-              icon={<Search className="text-blue-500" />}
-              title="SEO y Marketing de Contenidos"
-              desc="Posicionamiento orgánico sostenible con estrategia de contenidos y optimización técnica avanzada."
-              features={["SEO on-page y off-page", "Keyword research", "Creación de contenido"]}
-              bgColor="bg-blue-50"
-            />
-            <ServiceCard 
-              icon={<Bot className="text-indigo-400" />}
-              title="Automatización e Integraciones"
-              desc="Automatización inteligente de procesos con Make, n8n, ManyChat y conexión con CRM."
-              features={["Flujos automáticos", "Sincronización CRM", "Bots conversacionales"]}
-              bgColor="bg-indigo-50"
-            />
-            <ServiceCard 
-              icon={<Video className="text-sky-500" />}
-              title="Producción Audiovisual"
-              desc="Creatividades impactantes, vídeos publicitarios y contenido audiovisual para todas las plataformas."
-              features={["Anuncios y videos", "Contenido para RRSS", "Producción fotográfica"]}
-              bgColor="bg-sky-50"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Improved Work Process Section */}
-      <section id="proceso" className="py-32 px-6 relative overflow-hidden">
-        {/* Background glow effects */}
-        <div className="absolute top-1/2 left-0 w-64 h-64 bg-blue-500/5 blur-[100px] rounded-full -z-10"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-emerald-500/5 blur-[120px] rounded-full -z-10"></div>
-
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-24">
-            <div className="inline-flex items-center space-x-2 bg-blue-50 border border-blue-100 px-4 py-1.5 rounded-full text-[#3b82f6] text-xs font-bold mb-4 uppercase tracking-widest">
-              <span>Metodología de Éxito</span>
-            </div>
-            <h2 className="text-4xl md:text-6xl font-extrabold mb-6 text-[#111827] tracking-tight">
-              Un camino claro hacia <br />
-              <span className="gradient-text">tus objetivos</span>
-            </h2>
-            <p className="text-slate-500 text-lg max-w-2xl mx-auto font-medium">Nuestra metodología de 3 fases diseñada para maximizar la eficiencia y el crecimiento sostenible de tu marca.</p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 relative">
-            {/* Horizontal Line Connector (Only Desktop) */}
-            <div className="hidden lg:block absolute top-[15%] left-[15%] right-[15%] h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent -z-10"></div>
-
-            <ProcessStep 
-              num="01"
-              icon={<ShieldCheck className="text-blue-500" size={32} />}
-              title="Auditoría y Diagnóstico 360"
-              desc="No disparamos a ciegas. Analizamos tu ecosistema digital actual, tu competencia y el comportamiento de tu audiencia para encontrar las grietas y oportunidades de oro."
-              points={["Análisis de mercado", "Auditoría técnica SEO", "Estudio de competencia"]}
-              color="blue"
-            />
-            <ProcessStep 
-              num="02"
-              icon={<Sparkles className="text-emerald-500" size={32} />}
-              title="Arquitectura Estratégica"
-              desc="Diseñamos un plan maestro personalizado. Definimos canales, mensajes clave, embudos de conversión y automatizaciones que trabajarán por ti mientras duermes."
-              points={["Plan de contenidos", "Estrategia Paid Media", "Flujos de automatización"]}
-              color="emerald"
-            />
-            <ProcessStep 
-              num="03"
-              icon={<TrendingUp className="text-indigo-500" size={32} />}
-              title="Ejecución y Escalado"
-              desc="Implementamos, medimos y optimizamos en tiempo real. Utilizamos datos reales para escalar lo que funciona y corregir lo que no, garantizando el mejor ROI posible."
-              points={["Optimización continua", "Reportes de impacto", "Escalado de inversión"]}
-              color="indigo"
-              isLast
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Achievements Section (Replaces Logos Trust Section) */}
-      <section className="py-24 px-6 bg-[#0f172a] text-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight">
-              Impacto que habla <br />
-              <span className="text-blue-400">por sí mismo</span>
-            </h2>
-            <p className="text-slate-400 text-lg max-w-2xl mx-auto font-medium">
-              No se trata de quiénes somos, sino de lo que hemos logrado transformar para nuestros clientes. Resultados tangibles en industrias competitivas.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <AchievementItem 
-              icon={<TrendingUp className="text-emerald-400" />}
-              metric="+245%"
-              title="Crecimiento en Retail"
-              desc="Incremento masivo en ventas orgánicas para una de las cadenas de tecnología más grandes del país en solo 6 meses."
-            />
-            <AchievementItem 
-              icon={<Users className="text-blue-400" />}
-              metric="1.2M+"
-              title="Alcance Mensual"
-              desc="Lideramos estrategias de contenido viral que posicionaron a marcas líderes frente a millones de clientes potenciales."
-            />
-            <AchievementItem 
-              icon={<BarChart3 className="text-indigo-400" />}
-              metric="-40%"
-              title="Optimización de CPA"
-              desc="Redujimos el costo por adquisición en campañas de Ads manteniendo el volumen de leads calificados."
-            />
-            <AchievementItem 
-              icon={<Rocket className="text-rose-400" />}
-              metric="20h+"
-              title="Tiempo Ahorrado"
-              desc="Implementamos flujos de automatización que liberaron horas operativas semanales al equipo de ventas."
-            />
-          </div>
-
-          <div className="mt-20 pt-16 border-t border-slate-800 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h3 className="text-3xl font-bold mb-6">Expertos en escalar negocios digitales</h3>
-              <p className="text-slate-400 leading-relaxed mb-8">
-                Nuestra experiencia no se basa en teoría, sino en la ejecución diaria de estrategias para marcas que dominan el mercado local e internacional. Hemos manejado presupuestos millonarios en pauta y optimizado ecosistemas web para millones de usuarios.
-              </p>
-              <div className="flex flex-col space-y-4">
-                <div className="flex items-start space-x-3">
-                  <CheckCircle2 className="text-emerald-400 mt-1 flex-shrink-0" size={20} />
-                  <span>Dominio absoluto de Google Search y Social Ads.</span>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <CheckCircle2 className="text-emerald-400 mt-1 flex-shrink-0" size={20} />
-                  <span>Arquitectura de conversión (CRO) validada con datos.</span>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <CheckCircle2 className="text-emerald-400 mt-1 flex-shrink-0" size={20} />
-                  <span>Automatización inteligente para reducir fricción en ventas.</span>
-                </div>
-              </div>
-            </div>
-            <div className="bg-slate-800/50 p-10 rounded-[3rem] border border-slate-700 backdrop-blur-sm">
-              <div className="mb-8">
-                <div className="text-4xl font-black text-white mb-2">ROI Real</div>
-                <div className="text-slate-400 text-sm font-bold uppercase tracking-widest">Enfoque a Resultados</div>
-              </div>
-              <p className="text-slate-300 italic mb-8 leading-relaxed">
-                "La mayoría de las agencias se enfocan en likes e impresiones. Nosotros nos enfocamos en que tu inversión retorne multiplicada en facturación real."
-              </p>
-              <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
-                  <Award size={24} />
-                </div>
-                <div>
-                  <div className="font-bold text-white">Mauro Gorrín</div>
-                  <div className="text-slate-500 text-xs uppercase font-black">Fundador & Estratega</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Certifications */}
-      <section className="py-24 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-extrabold mb-4 text-[#111827]">Certificaciones y Acreditaciones</h2>
-            <p className="text-slate-500 text-lg">Experto certificado en las principales plataformas de publicidad digital</p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-            <CertCard title="Google Ads" desc="Certified Google Ads Expert en Search, Display, Shopping y Videomarketing" icon={<BarChart4 className="text-indigo-400" />} />
-            <CertCard title="Meta Ads" desc="Meta Business Partner certificado en Facebook Ads y Instagram Advertising" icon={<Target className="text-indigo-600" />} />
-            <CertCard title="TikTok Ads" desc="Especialista certificado en TikTok For Business y Campaign Management" icon={<Share2 className="text-indigo-400" />} />
-            <CertCard title="LinkedIn Ads" desc="Experto certificado en LinkedIn Campaign Manager y B2B Marketing" icon={<PenTool className="text-indigo-300" />} />
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <CertCard title="SEO & SEM" desc="Especialista en optimización orgánica y estrategias de búsqueda pagada" icon={<Search className="text-blue-400" />} />
-            <CertCard title="Analytics & BI" desc="Certificado en Google Analytics 4 y análisis de datos avanzado" icon={<Layout className="text-blue-300" />} />
-            <CertCard title="Email Marketing" desc="Especialista en automatización y estrategias de email segmentado" icon={<Mail className="text-red-400" />} />
-            <CertCard title="Inbound Marketing" desc="HubSpot Certified Professional en metodología inbound" icon={<Target className="text-red-500" />} />
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="py-24 px-6 bg-slate-50">
-        <div className="max-w-3xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-extrabold mb-4 text-[#111827]">Preguntas Frecuentes</h2>
-            <p className="text-slate-500 text-lg">Resolvemos tus dudas sobre cómo podemos impulsar tu negocio.</p>
-          </div>
-          
-          <div className="bg-white rounded-[2.5rem] p-8 md:p-12 shadow-sm border border-slate-100">
-            {FAQ_DATA.map((faq, index) => (
-              <FAQItem 
-                key={index}
-                question={faq.question}
-                answer={faq.answer}
-                isOpen={openFaqIndex === index}
-                onClick={() => setOpenFaqIndex(openFaqIndex === index ? null : index)}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Final CTA Section */}
-      <section id="contacto" className="py-44 px-6 bg-white border-t border-slate-100 overflow-hidden relative">
-        <div className="max-w-5xl mx-auto text-center">
-          <div className="inline-flex items-center space-x-2 bg-emerald-50 border border-emerald-100 px-4 py-1.5 rounded-full text-[#059669] text-xs font-bold mb-8 uppercase tracking-wider">
-            <Zap size={14} className="fill-current" />
-            <span>Hablemos de tu proyecto</span>
-          </div>
-          
-          <h2 className="text-[3.5rem] md:text-[5.5rem] font-extrabold tracking-tight text-[#111827] mb-8 leading-[1.05]">
-            ¿Listo para llevar tu marca <br />
-            <span className="gradient-text">al siguiente nivel?</span>
-          </h2>
-          
-          <p className="text-slate-500 text-lg md:text-xl max-w-3xl mx-auto mb-12 font-medium leading-relaxed">
-            Trabajemos juntos para transformar tu presencia digital con estrategias que generan resultados reales y medibles. Nuestro equipo está listo para ayudarte a escalar.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a 
-              href={CALENDLY_LINK}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full sm:w-auto bg-[#009688] hover:bg-[#00796b] text-white px-12 py-5 rounded-full font-bold flex items-center justify-center transition-all shadow-xl shadow-emerald-500/20 text-lg"
-            >
-              Trabajemos Juntos <ArrowRight className="ml-2" size={24} />
-            </a>
-          </div>
-        </div>
-      </section>
-    </div>
-  );
-};
-
-const StatItem: React.FC<{ number: string; label: string }> = ({ number, label }) => (
-  <div className="flex flex-col items-center">
-    <span className="text-4xl md:text-5xl font-black text-[#3b82f6] mb-3">{number}</span>
-    <span className="text-xs font-bold text-slate-500 uppercase tracking-widest text-center">{label}</span>
-  </div>
-);
-
-const AchievementItem: React.FC<{ icon: React.ReactNode; metric: string; title: string; desc: string }> = ({ icon, metric, title, desc }) => (
-  <div className="p-8 rounded-[2.5rem] bg-white/5 border border-white/10 hover:bg-white/[0.08] transition-all group">
-    <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-      {icon}
-    </div>
-    <div className="text-4xl font-black mb-1 text-white">{metric}</div>
-    <h3 className="text-lg font-bold mb-3 text-slate-200">{title}</h3>
-    <p className="text-slate-400 text-sm leading-relaxed">{desc}</p>
-  </div>
-);
-
-const ServiceCard: React.FC<{ icon: React.ReactNode; title: string; desc: string; features: string[]; bgColor: string }> = ({ icon, title, desc, features, bgColor }) => (
-  <div className={`service-card p-10 rounded-[2.5rem] bg-white border border-slate-100 flex flex-col h-full shadow-sm`}>
-    <div className={`w-14 h-14 rounded-2xl ${bgColor} flex items-center justify-center mb-8`}>
-      {icon}
-    </div>
-    <h3 className="text-xl font-extrabold mb-4 text-[#111827] leading-tight">{title}</h3>
-    <p className="text-slate-500 text-sm leading-relaxed mb-8 flex-grow">{desc}</p>
-    <ul className="space-y-3 pt-6 border-t border-slate-50">
-      {features.map((f, i) => (
-        <li key={i} className="flex items-center text-xs font-bold text-slate-600">
-          <CheckCircle2 size={14} className="text-[#10b981] mr-2" />
-          {f}
-        </li>
-      ))}
-    </ul>
-  </div>
-);
-
-const ProcessStep: React.FC<{ num: string; icon: React.ReactNode; title: string; desc: string; points: string[]; color: 'blue' | 'emerald' | 'indigo'; isLast?: boolean }> = ({ num, icon, title, desc, points, color, isLast }) => {
-  const colorMap = {
-    blue: 'bg-blue-50 border-blue-100 text-blue-500',
-    emerald: 'bg-emerald-50 border-emerald-100 text-emerald-500',
-    indigo: 'bg-indigo-50 border-indigo-100 text-indigo-500'
-  };
-
-  return (
-    <div className="group relative">
-      <div className={`p-10 rounded-[3rem] bg-white border border-slate-100 flex flex-col h-full shadow-sm group-hover:shadow-2xl group-hover:shadow-blue-500/5 group-hover:-translate-y-2 transition-all duration-500`}>
-        <div className="flex items-center justify-between mb-8">
-          <div className={`w-16 h-16 rounded-2xl ${colorMap[color]} border flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-500`}>
-            {icon}
-          </div>
-          <span className={`text-6xl font-black ${color === 'blue' ? 'text-blue-50' : color === 'emerald' ? 'text-emerald-50' : 'text-indigo-50'} group-hover:opacity-100 transition-opacity`}>
-            {num}
-          </span>
-        </div>
-        
-        <h3 className="text-2xl font-extrabold mb-4 text-[#111827] leading-tight">{title}</h3>
-        <p className="text-slate-500 text-sm leading-relaxed font-medium mb-8 flex-grow">{desc}</p>
-        
-        <div className="space-y-3 pt-6 border-t border-slate-50">
-          {points.map((p, i) => (
-            <div key={i} className="flex items-center text-xs font-bold text-slate-600">
-              <div className={`w-1.5 h-1.5 rounded-full mr-2 ${color === 'blue' ? 'bg-blue-400' : color === 'emerald' ? 'bg-emerald-400' : 'bg-indigo-400'}`}></div>
-              {p}
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const CertCard: React.FC<{ title: string; desc: string; icon: React.ReactNode }> = ({ title, desc, icon }) => (
-  <div className="p-8 rounded-[2rem] bg-slate-50/80 border border-slate-100 flex flex-col h-full">
-    <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center mb-6 shadow-sm">
-      {icon}
-    </div>
-    <h4 className="text-lg font-extrabold mb-3 text-[#111827]">{title}</h4>
-    <p className="text-slate-500 text-xs font-medium leading-relaxed">{desc}</p>
-  </div>
-);
-
-export default Home;
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="bg-white text-slate-900 overflow-x-hidden">
+    <div id="root"></div>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>

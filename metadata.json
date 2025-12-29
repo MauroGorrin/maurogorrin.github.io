@@ -1,0 +1,8 @@
+{
+  "name": "Nexus Digital Marketing",
+  "description": "A high-end, AI-powered digital marketing agency website featuring performance analytics, service highlights, and an intelligent strategy consultant powered by Gemini.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
