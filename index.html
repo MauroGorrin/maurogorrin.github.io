@@ -14,9 +14,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-
     <style>
         :root {
             --primary: #3b82f6;
@@ -33,7 +30,7 @@
             content: "";
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            opacity: 0.015;
+            opacity: 0.02;
             z-index: 9999;
             pointer-events: none;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
@@ -53,30 +50,31 @@
             color: transparent;
         }
         .glass-nav {
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.75);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.4);
         }
         .bento-item {
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .bento-item:hover {
-            transform: translateY(-10px) scale(1.01);
-            box-shadow: 0 40px 80px -15px rgba(0, 0, 0, 0.08);
-        }
-
-        .strategy-card {
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(10px);
+            transform: translateY(-8px);
+            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.05);
         }
         
         /* Menú Móvil */
         #mobile-menu {
-            transform: translateY(-100%);
+            transform: translateX(100%);
             transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
         #mobile-menu.active {
-            transform: translateY(0);
+            transform: translateX(0);
+        }
+
+        /* Ajuste de iconos Lucide */
+        .lucide {
+            display: inline-block;
+            vertical-align: middle;
         }
     </style>
 </head>
@@ -84,17 +82,18 @@
 
     <!-- Menú Móvil Overlay -->
     <div id="mobile-menu" class="fixed inset-0 bg-white z-[60] flex flex-col p-8 md:hidden">
-        <div class="flex justify-end mb-12">
+        <div class="flex justify-between items-center mb-12">
+            <span class="text-xl font-black tracking-tighter uppercase">MAU<span class="text-blue-500">GORRÍN</span></span>
             <button id="close-menu" class="p-2 text-slate-900">
                 <i data-lucide="x" class="w-8 h-8"></i>
             </button>
         </div>
-        <div class="flex flex-col space-y-8 text-center">
-            <a href="#servicios" class="text-4xl font-black uppercase tracking-tighter mobile-link">Servicios</a>
-            <a href="#proceso" class="text-4xl font-black uppercase tracking-tighter mobile-link">Proceso</a>
-            <a href="#faq" class="text-4xl font-black uppercase tracking-tighter mobile-link">FAQs</a>
-            <a href="#contacto" class="text-4xl font-black uppercase tracking-tighter mobile-link">Contacto</a>
-            <a href="https://calendly.com/maurogorrin55/30min-meeting-with-mauro" target="_blank" rel="noopener noreferrer" class="bg-blue-600 text-white py-6 rounded-3xl text-xl font-black uppercase tracking-widest shadow-xl shadow-blue-500/20">
+        <div class="flex flex-col space-y-8 text-left">
+            <a href="#servicios" class="text-5xl font-black uppercase tracking-tighter mobile-link">Servicios</a>
+            <a href="#proceso" class="text-5xl font-black uppercase tracking-tighter mobile-link">Proceso</a>
+            <a href="#faq" class="text-5xl font-black uppercase tracking-tighter mobile-link">FAQs</a>
+            <a href="#contacto" class="text-5xl font-black uppercase tracking-tighter mobile-link">Contacto</a>
+            <a href="https://calendly.com/maurogorrin55/30min-meeting-with-mauro" target="_blank" rel="noopener noreferrer" class="bg-blue-600 text-white py-6 rounded-3xl text-xl font-black uppercase tracking-widest text-center shadow-xl shadow-blue-500/20">
                 Trabajemos
             </a>
         </div>
@@ -168,7 +167,7 @@
                 <p class="text-slate-500 text-xl font-semibold max-w-2xl">Soluciones integrales diseñadas para dominar tu mercado.</p>
             </div>
 
-            <!-- PROTAGONISTA: GESTIÓN DE PUBLICIDAD -->
+            <!-- SERVICIO ESTRELLA -->
             <div class="mb-12 bg-slate-950 rounded-[4rem] p-10 md:p-20 text-white relative overflow-hidden bento-item border border-white/5 shadow-2xl">
                 <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-600/20 blur-[150px] -z-0"></div>
                 <div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -181,27 +180,16 @@
                             Gestión de <br> <span class="text-blue-400">Publicidad Digital</span>
                         </h3>
                         <p class="text-slate-400 text-xl leading-relaxed mb-12 font-medium">
-                            No compramos clics, compramos rentabilidad. Desarrollamos campañas agresivas en Google, Meta y TikTok optimizadas para maximizar tu ROAS y escalar tu facturación de forma predecible.
+                            No compramos clics, compramos rentabilidad. Desarrollamos campañas agresivas en Google, Meta y TikTok optimizadas para maximizar tu ROAS de forma predecible.
                         </p>
                         
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-12">
-                            <div class="space-y-4">
-                                <div class="flex items-center space-x-3 text-blue-400"><i data-lucide="check" class="w-5 h-5"></i> <span class="text-[10px] font-black uppercase tracking-widest">Google Ads (Search/Shopping)</span></div>
-                                <div class="flex items-center space-x-3 text-blue-400"><i data-lucide="check" class="w-5 h-5"></i> <span class="text-[10px] font-black uppercase tracking-widest">Meta Ads (Facebook/Instagram)</span></div>
-                            </div>
-                            <div class="space-y-4">
-                                <div class="flex items-center space-x-3 text-blue-400"><i data-lucide="check" class="w-5 h-5"></i> <span class="text-[10px] font-black uppercase tracking-widest">TikTok & LinkedIn Ads</span></div>
-                                <div class="flex items-center space-x-3 text-blue-400"><i data-lucide="check" class="w-5 h-5"></i> <span class="text-[10px] font-black uppercase tracking-widest">Optimización ROAS Avanzada</span></div>
-                            </div>
-                        </div>
-
                         <a href="https://calendly.com/maurogorrin55/30min-meeting-with-mauro" target="_blank" rel="noopener noreferrer" class="inline-flex items-center bg-white text-slate-950 px-10 py-5 rounded-3xl font-black text-lg uppercase tracking-wider hover:bg-blue-400 hover:text-white transition-all shadow-2xl">
                             Agendar Auditoría <i data-lucide="trending-up" class="ml-3 w-6 h-6"></i>
                         </a>
                     </div>
                     
                     <div class="hidden lg:block relative">
-                        <div class="strategy-card border border-white/10 rounded-[3.5rem] p-10 shadow-2xl relative z-10">
+                        <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-[3.5rem] p-10 shadow-2xl relative z-10">
                             <div class="flex items-center justify-between mb-10">
                                 <span class="text-[10px] font-black uppercase tracking-widest text-slate-500">Live Ad-Performance</span>
                                 <div class="flex space-x-2">
@@ -216,11 +204,11 @@
                                     <div class="text-6xl font-black text-blue-400 tracking-tighter">8.42x</div>
                                 </div>
                                 <div class="grid grid-cols-2 gap-6">
-                                    <div class="bg-white/5 p-6 rounded-3xl border border-white/5">
+                                    <div class="bg-white/5 p-6 rounded-3xl border border-white/5 text-center">
                                         <div class="text-[9px] font-black uppercase text-slate-500 tracking-widest mb-1">CPA Promedio</div>
                                         <div class="text-3xl font-black text-emerald-400 tracking-tighter">$12.40</div>
                                     </div>
-                                    <div class="bg-white/5 p-6 rounded-3xl border border-white/5">
+                                    <div class="bg-white/5 p-6 rounded-3xl border border-white/5 text-center">
                                         <div class="text-[9px] font-black uppercase text-slate-500 tracking-widest mb-1">Conversiones</div>
                                         <div class="text-3xl font-black text-white tracking-tighter">+1,240</div>
                                     </div>
@@ -231,64 +219,23 @@
                 </div>
             </div>
 
-            <!-- OTROS SERVICIOS -->
+            <!-- OTROS SERVICIOS BENTO -->
             <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
                 <div class="md:col-span-8 bento-item bg-white p-12 rounded-[3.5rem] border border-slate-100 flex flex-col justify-between">
                     <div>
                         <div class="w-16 h-16 rounded-2xl bg-blue-50 flex items-center justify-center mb-10 border border-blue-100">
                             <i data-lucide="brain-circuit" class="text-blue-600 w-8 h-8"></i>
                         </div>
-                        <h3 class="text-3xl font-black mb-6 uppercase">Estrategia y Consultoría Digital</h3>
-                        <p class="text-slate-500 text-lg leading-relaxed mb-8 font-medium">
-                            Auditorías web, desarrollo de estrategias personalizadas y optimización de embudos para asegurar que cada parte de tu negocio esté lista para el crecimiento.
-                        </p>
-                    </div>
-                    <div class="flex flex-wrap gap-3">
-                        <span class="px-5 py-2.5 bg-slate-100 rounded-full text-[10px] font-black text-slate-600 uppercase tracking-widest">Auditorías Web</span>
-                        <span class="px-5 py-2.5 bg-slate-100 rounded-full text-[10px] font-black text-slate-600 uppercase tracking-widest">Buyer Persona</span>
-                        <span class="px-5 py-2.5 bg-slate-100 rounded-full text-[10px] font-black text-slate-600 uppercase tracking-widest">Benchmarks</span>
+                        <h3 class="text-3xl font-black mb-6 uppercase">Estrategia y Consultoría</h3>
+                        <p class="text-slate-500 text-lg leading-relaxed mb-8 font-medium">Auditorías web, desarrollo de estrategias personalizadas y optimización de embudos para escalar.</p>
                     </div>
                 </div>
-                <div class="md:col-span-4 bento-item bg-yellow-400 p-12 rounded-[3.5rem] flex flex-col justify-between border border-yellow-500/20">
-                    <div>
-                        <div class="w-16 h-16 rounded-2xl bg-black/10 flex items-center justify-center mb-10">
-                            <i data-lucide="zap" class="text-black w-8 h-8"></i>
-                        </div>
-                        <h3 class="text-3xl font-black mb-4 uppercase leading-none">AI & Automation</h3>
-                        <p class="text-slate-950 leading-relaxed font-bold">
-                            Sincronización inteligente con Make, n8n y Manychat para ventas en piloto automático.
-                        </p>
+                <div class="md:col-span-4 bento-item bg-yellow-400 p-12 rounded-[3.5rem] border border-yellow-500/20">
+                    <div class="w-16 h-16 rounded-2xl bg-black/10 flex items-center justify-center mb-10">
+                        <i data-lucide="zap" class="text-black w-8 h-8"></i>
                     </div>
-                    <div class="text-[10px] font-black uppercase tracking-widest text-slate-900 border-t border-black/10 pt-6">WhatsApp & CRM Integrations</div>
-                </div>
-                <div class="md:col-span-4 bento-item bg-indigo-600 p-12 rounded-[3.5rem] text-white flex flex-col justify-between">
-                    <div>
-                        <div class="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center mb-10">
-                            <i data-lucide="layout" class="w-8 h-8"></i>
-                        </div>
-                        <h3 class="text-3xl font-black mb-4 uppercase leading-none">Diseño & Web</h3>
-                        <p class="text-indigo-50 leading-relaxed font-semibold">
-                            Ecommerce y landings optimizadas para la conversión más agresiva.
-                        </p>
-                    </div>
-                    <div class="flex gap-2 self-end">
-                        <div class="w-12 h-1.5 rounded-full bg-white"></div>
-                        <div class="w-6 h-1.5 rounded-full bg-white/30"></div>
-                    </div>
-                </div>
-                <div class="md:col-span-8 bento-item bg-white p-12 rounded-[3.5rem] border border-slate-100 flex flex-col md:flex-row items-center gap-10">
-                    <div class="flex-grow">
-                        <div class="w-16 h-16 rounded-2xl bg-red-50 flex items-center justify-center mb-8">
-                            <i data-lucide="video" class="text-red-600 w-8 h-8"></i>
-                        </div>
-                        <h3 class="text-3xl font-black mb-4 uppercase">Producción Audiovisual</h3>
-                        <p class="text-slate-500 text-lg leading-relaxed font-semibold max-sm:max-w-xs">
-                            Creatividades impactantes diseñadas específicamente para frenar el scroll y generar ventas.
-                        </p>
-                    </div>
-                    <div class="w-full md:w-64 h-48 bg-slate-950 rounded-[3rem] flex items-center justify-center text-white/20 font-black text-xs uppercase tracking-widest border border-white/5">
-                        Creative Lab
-                    </div>
+                    <h3 class="text-3xl font-black mb-4 uppercase leading-none">AI & Automation</h3>
+                    <p class="text-slate-900 leading-relaxed font-bold">Automatización inteligente con Make y Manychat.</p>
                 </div>
             </div>
         </div>
@@ -307,84 +254,57 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <div class="p-10 rounded-[3.5rem] bg-slate-50 border border-slate-100 bento-item relative group">
-                    <div class="text-8xl font-black text-slate-200 absolute top-4 right-8 opacity-40 group-hover:opacity-10 transition-opacity leading-none">01</div>
-                    <div class="w-16 h-16 rounded-2xl bg-white flex items-center justify-center mb-10 shadow-sm relative z-10"><i data-lucide="compass" class="text-blue-500 w-8 h-8"></i></div>
-                    <h3 class="text-2xl font-black mb-6 uppercase tracking-tight relative z-10">Auditoría</h3>
-                    <p class="text-slate-500 text-sm font-semibold leading-relaxed relative z-10">Inmersión total. Auditamos tu ecosistema actual y analizamos a tu competencia.</p>
+                    <div class="w-16 h-16 rounded-2xl bg-white flex items-center justify-center mb-10 shadow-sm"><i data-lucide="compass" class="text-blue-500 w-8 h-8"></i></div>
+                    <h3 class="text-2xl font-black mb-6 uppercase tracking-tight">01. Auditoría</h3>
+                    <p class="text-slate-500 text-sm font-semibold leading-relaxed">Analizamos tu ecosistema actual y el de tu competencia.</p>
                 </div>
                 <div class="p-10 rounded-[3.5rem] bg-slate-50 border border-slate-100 bento-item relative group">
-                    <div class="text-8xl font-black text-slate-200 absolute top-4 right-8 opacity-40 group-hover:opacity-10 transition-opacity leading-none">02</div>
-                    <div class="w-16 h-16 rounded-2xl bg-white flex items-center justify-center mb-10 shadow-sm relative z-10"><i data-lucide="layers" class="text-emerald-500 w-8 h-8"></i></div>
-                    <h3 class="text-2xl font-black mb-6 uppercase tracking-tight relative z-10">Arquitectura</h3>
-                    <p class="text-slate-500 text-sm font-semibold leading-relaxed relative z-10">Diseñamos el funnel. Seleccionamos canales con mayor ROI y definimos la oferta.</p>
+                    <div class="w-16 h-16 rounded-2xl bg-white flex items-center justify-center mb-10 shadow-sm"><i data-lucide="layers" class="text-emerald-500 w-8 h-8"></i></div>
+                    <h3 class="text-2xl font-black mb-6 uppercase tracking-tight">02. Arquitectura</h3>
+                    <p class="text-slate-500 text-sm font-semibold leading-relaxed">Diseñamos el funnel y seleccionamos canales de alto ROI.</p>
                 </div>
                 <div class="p-10 rounded-[3.5rem] bg-slate-50 border border-slate-100 bento-item relative group">
-                    <div class="text-8xl font-black text-slate-200 absolute top-4 right-8 opacity-40 group-hover:opacity-10 transition-opacity leading-none">03</div>
-                    <div class="w-16 h-16 rounded-2xl bg-white flex items-center justify-center mb-10 shadow-sm relative z-10"><i data-lucide="rocket" class="text-indigo-500 w-8 h-8"></i></div>
-                    <h3 class="text-2xl font-black mb-6 uppercase tracking-tight relative z-10">Ejecución</h3>
-                    <p class="text-slate-500 text-sm font-semibold leading-relaxed relative z-10">Configuración técnica de élite y lanzamiento con rastreo de conversiones avanzado.</p>
+                    <div class="w-16 h-16 rounded-2xl bg-white flex items-center justify-center mb-10 shadow-sm"><i data-lucide="rocket" class="text-indigo-500 w-8 h-8"></i></div>
+                    <h3 class="text-2xl font-black mb-6 uppercase tracking-tight">03. Ejecución</h3>
+                    <p class="text-slate-500 text-sm font-semibold leading-relaxed">Lanzamiento agresivo con rastreo de conversiones de élite.</p>
                 </div>
                 <div class="p-10 rounded-[3.5rem] bg-slate-50 border border-slate-100 bento-item relative group">
-                    <div class="text-8xl font-black text-slate-200 absolute top-4 right-8 opacity-40 group-hover:opacity-10 transition-opacity leading-none">04</div>
-                    <div class="w-16 h-16 rounded-2xl bg-white flex items-center justify-center mb-10 shadow-sm relative z-10"><i data-lucide="activity" class="text-orange-500 w-8 h-8"></i></div>
-                    <h3 class="text-2xl font-black mb-6 uppercase tracking-tight relative z-10">Optimización</h3>
-                    <p class="text-slate-500 text-sm font-semibold leading-relaxed relative z-10">Ajustamos pujas y creatividades a diario para bajar tu CPA y escalar lo rentable.</p>
+                    <div class="w-16 h-16 rounded-2xl bg-white flex items-center justify-center mb-10 shadow-sm"><i data-lucide="activity" class="text-orange-500 w-8 h-8"></i></div>
+                    <h3 class="text-2xl font-black mb-6 uppercase tracking-tight">04. Escalamiento</h3>
+                    <p class="text-slate-500 text-sm font-semibold leading-relaxed">Ajustes diarios para bajar CPA y escalar la facturación.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FAQs Sección Rediseñada (Estilo Tarjetas) -->
+    <!-- FAQs Rediseñadas (Simples como Proceso) -->
     <section id="faq" class="py-32 px-6 bg-slate-50">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-24">
-                <h2 class="text-6xl md:text-[8rem] font-black mb-8 leading-[0.8] uppercase tracking-tighter">Transparencia <br> Total</h2>
-                <p class="text-slate-500 text-xl font-semibold uppercase tracking-widest">Resolvemos tus dudas antes de empezar</p>
+                <h2 class="text-6xl md:text-[8rem] font-black mb-8 leading-[0.8] uppercase tracking-tighter text-slate-900">Transparencia <br> <span class="gradient-text">Total</span></h2>
+                <p class="text-slate-500 text-xl font-semibold uppercase tracking-widest">Preguntas frecuentes</p>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- FAQ Item 1 -->
-                <div class="p-10 rounded-[3.5rem] bg-white border border-slate-100 bento-item group">
-                    <div class="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center mb-8">
-                        <i data-lucide="timer" class="text-blue-500 w-7 h-7"></i>
-                    </div>
-                    <h3 class="text-2xl font-black mb-6 uppercase tracking-tight text-slate-900">¿En cuánto tiempo veré resultados reales?</h3>
-                    <p class="text-slate-500 text-lg leading-relaxed font-semibold">
-                        Con Publicidad Digital (Paid Media), empezamos a generar tráfico y leads desde la primera semana. Para estrategias de SEO, los resultados sólidos suelen consolidarse entre los 3 y 6 meses.
-                    </p>
+                <div class="p-12 rounded-[3.5rem] bg-white border border-slate-100 bento-item flex flex-col items-start">
+                    <div class="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center mb-8"><i data-lucide="clock" class="text-blue-500 w-7 h-7"></i></div>
+                    <h3 class="text-2xl font-black mb-6 uppercase tracking-tight">¿Cuándo veré resultados?</h3>
+                    <p class="text-slate-500 text-lg leading-relaxed font-semibold">En publicidad digital (Ads), los resultados son visibles desde la primera semana. El escalamiento real ocurre entre el mes 1 y 3.</p>
                 </div>
-
-                <!-- FAQ Item 2 -->
-                <div class="p-10 rounded-[3.5rem] bg-white border border-slate-100 bento-item group">
-                    <div class="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center mb-8">
-                        <i data-lucide="banknote" class="text-emerald-500 w-7 h-7"></i>
-                    </div>
-                    <h3 class="text-2xl font-black mb-6 uppercase tracking-tight text-slate-900">¿Cuál es la inversión mínima recomendada?</h3>
-                    <p class="text-slate-500 text-lg leading-relaxed font-semibold">
-                        No hay un mínimo estricto, pero recomendamos presupuestos que permitan obtener datos estadísticamente significativos. El objetivo siempre es que la inversión se pague sola mediante el retorno generado.
-                    </p>
+                <div class="p-12 rounded-[3.5rem] bg-white border border-slate-100 bento-item flex flex-col items-start">
+                    <div class="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center mb-8"><i data-lucide="dollar-sign" class="text-emerald-500 w-7 h-7"></i></div>
+                    <h3 class="text-2xl font-black mb-6 uppercase tracking-tight">¿Inversión mínima?</h3>
+                    <p class="text-slate-500 text-lg leading-relaxed font-semibold">Adaptamos la estrategia a tu capacidad actual, pero recomendamos presupuestos que permitan captar datos significativos para optimizar.</p>
                 </div>
-
-                <!-- FAQ Item 3 -->
-                <div class="p-10 rounded-[3.5rem] bg-white border border-slate-100 bento-item group">
-                    <div class="w-14 h-14 rounded-2xl bg-indigo-50 flex items-center justify-center mb-8">
-                        <i data-lucide="bar-chart-3" class="text-indigo-500 w-7 h-7"></i>
-                    </div>
-                    <h3 class="text-2xl font-black mb-6 uppercase tracking-tight text-slate-900">¿Cómo medimos el éxito de las campañas?</h3>
-                    <p class="text-slate-500 text-lg leading-relaxed font-semibold">
-                        Nos enfocamos en KPIs de negocio: ROAS (Retorno Publicitario), CPA (Costo por Adquisición) y LTV (Valor de vida del cliente). Recibirás reportes en tiempo real de estas métricas clave.
-                    </p>
+                <div class="p-12 rounded-[3.5rem] bg-white border border-slate-100 bento-item flex flex-col items-start">
+                    <div class="w-14 h-14 rounded-2xl bg-indigo-50 flex items-center justify-center mb-8"><i data-lucide="bar-chart" class="text-indigo-500 w-7 h-7"></i></div>
+                    <h3 class="text-2xl font-black mb-6 uppercase tracking-tight">¿Cómo medimos el éxito?</h3>
+                    <p class="text-slate-500 text-lg leading-relaxed font-semibold">Reportes semanales basados en ROAS, CPA y volumen de conversiones. Tu facturación es nuestra única métrica real.</p>
                 </div>
-
-                <!-- FAQ Item 4 -->
-                <div class="p-10 rounded-[3.5rem] bg-white border border-slate-100 bento-item group">
-                    <div class="w-14 h-14 rounded-2xl bg-orange-50 flex items-center justify-center mb-8">
-                        <i data-lucide="shield-check" class="text-orange-500 w-7 h-7"></i>
-                    </div>
-                    <h3 class="text-2xl font-black mb-6 uppercase tracking-tight text-slate-900">¿Necesito un contrato de permanencia?</h3>
-                    <p class="text-slate-500 text-lg leading-relaxed font-semibold">
-                        Creemos en los resultados, no en las ataduras. Ofrecemos contratos flexibles porque sabemos que una vez veas el retorno de inversión, querrás seguir escalando con nosotros.
-                    </p>
+                <div class="p-12 rounded-[3.5rem] bg-white border border-slate-100 bento-item flex flex-col items-start">
+                    <div class="w-14 h-14 rounded-2xl bg-orange-50 flex items-center justify-center mb-8"><i data-lucide="user-check" class="text-orange-500 w-7 h-7"></i></div>
+                    <h3 class="text-2xl font-black mb-6 uppercase tracking-tight">¿Permanencia?</h3>
+                    <p class="text-slate-500 text-lg leading-relaxed font-semibold">Creemos en resultados, no en ataduras. No exigimos contratos de permanencia a largo plazo si no estás satisfecho.</p>
                 </div>
             </div>
         </div>
@@ -418,6 +338,7 @@
     </footer>
 
     <!-- Scripts -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <script type="module" src="index.tsx"></script>
 </body>
 </html>
